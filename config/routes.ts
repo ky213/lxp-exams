@@ -28,7 +28,13 @@ export const routes = [
       {
         path: 'categories',
         name: 'Categories',
-        component: './Welcome',
+        routes: [
+          {
+            path: 'edit',
+            name: 'Create',
+            component: './QuestionBank/CreateEditCategory',
+          },
+        ],
       },
     ],
   },
