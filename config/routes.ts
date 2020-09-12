@@ -10,18 +10,24 @@ export const routes = [
       },
     ],
   },
-
   {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    component: './Admin',
+    path: '/questions',
+    name: 'Question Bank',
+    icon: 'QuestionOutlined',
     routes: [
       {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
+        path: 'list',
+        name: 'List',
+        component: './Welcome',
+      },
+      {
+        path: 'edit',
+        name: 'Creator',
+        component: './QuestionBank/CreateEditQuestions',
+      },
+      {
+        path: 'categories',
+        name: 'Categories',
         component: './Welcome',
       },
     ],
