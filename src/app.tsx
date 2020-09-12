@@ -13,9 +13,45 @@ export async function getInitialState(): Promise<{
   settings?: LayoutSettings;
 }> {
   // If it is a login page, do not execute
-  if (history.location.pathname !== '/user/login') {
+  if (true) {
     try {
-      const currentUser = await queryCurrent();
+      const currentUser: API.CurrentUser = {
+        name: 'Serati Ma',
+        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        userid: '00000001',
+        signature: 'Be tolerant to diversity, tolerance is a virtue',
+        title: 'Interaction expert',
+        group:
+          'Ant Financial-XX Business Group-XX Platform Department-XX Technology Department-UED',
+        tags: [
+          {
+            key: '0',
+            label: 'Very thoughtful',
+          },
+          {
+            key: '1',
+            label: 'Focus on design',
+          },
+          {
+            key: '2',
+            label: 'Spicy~',
+          },
+          {
+            key: '3',
+            label: 'Long legs',
+          },
+          {
+            key: '4',
+            label: 'Chuan Meizi',
+          },
+          {
+            key: '5',
+            label: 'Inclusive of all rivers',
+          },
+        ],
+        unreadCount: 11,
+        access: 'admin',
+      };
       return {
         currentUser,
         settings: defaultSettings,
@@ -40,9 +76,9 @@ export const layout = ({
     footerRender: () => <Footer />,
     onPageChange: () => {
       // If not logged in, redirect to login
-      if (!initialState?.currentUser?.userid && history.location.pathname !== '/user/login') {
-        history.push('/user/login');
-      }
+      // if (!initialState?.currentUser?.userid && history.location.pathname !== '/user/login') {
+      //   history.push('/user/login');
+      // }
     },
     menuHeaderRender: undefined,
     ...initialState?.settings,

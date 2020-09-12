@@ -10,7 +10,7 @@ export const SelectCategory = () => {
       <Divider style={{ margin: '4px 0' }} />
       <div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
         <Link
-          to="category/create"
+          to="categories/edit"
           style={{
             flex: 'none',
             padding: '5px',
