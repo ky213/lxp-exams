@@ -23,14 +23,14 @@ export interface CategoriesModel {
   effects: {
     getAll: Effect;
     getById: Effect;
+    create: Effect;
     update: Effect;
     delete: Effect;
   };
   reducers: {
     saveAll: Reducer<CategoryState, AnyAction>;
     saveById: Reducer<CategoryState, AnyAction>;
-    update: Reducer<CategoryState, AnyAction>;
-    delete: Reducer<CategoryState, AnyAction>;
+    saveUpdate: Reducer<CategoryState, AnyAction>;
     loading: Reducer<CategoryState, AnyAction>;
     error: Reducer<CategoryState, AnyAction>;
   };
@@ -40,48 +40,104 @@ const initialState: CategoryState = {
   allCategories: [],
   currentCategory: null,
   loading: false,
-
   error: null,
 };
+
+export enum ACTIONS {
+  GET_ALL = 'categories/getAll',
+  GET_BY_ID = 'categories/getById',
+  CREATE = 'categories/create',
+  UPDATE = 'categories/update',
+  DELETE = 'categories/delete',
+}
 
 const CategoriesModel: CategoriesModel = {
   namespace: 'categories',
   state: initialState,
   effects: {
-    *getAll(action, { call, put }) {
+    *getAll(_, { call, put }) {
       try {
         yield put({ type: 'loading' });
-        const categorie = yield call(getAll);
-        yield put({ type: 'saveAll', payload: categorie });
+        const { data } = yield call(getAll);
+        yield put({ type: 'saveAll', payload: data });
       } catch (error) {
         yield put({ type: 'error', payload: error });
       }
     },
-    *getById() {},
-    *update() {},
-    *delete() {},
+    *getById(action, { call, put }) {
+      try {
+        yield put({ type: 'loading' });
+        const { data } = yield call(getById, action.payload);
+        yield put({ type: 'saveById', payload: data[0] });
+      } catch (error) {
+        yield put({ type: 'error', payload: error });
+      }
+    },
+    *create(action, { call, put }) {
+      try {
+        yield put({ type: 'loading' });
+        yield call(create(action.payload));
+        yield put({ type: 'getAll' });
+      } catch (error) {
+        yield put({ type: 'error', payload: error });
+      }
+    },
+    *update(action, { call, put }) {
+      try {
+        yield put({ type: 'loading' });
+        const category = yield call(update(action.payload));
+        yield put({ type: 'saveUpdate', payload: category });
+      } catch (error) {
+        yield put({ type: 'error', payload: error });
+      }
+    },
+    *delete(action, { call, put }) {
+      try {
+        yield put({ type: 'loading' });
+        yield call(remove(action.payload));
+        yield put({ type: 'getAll' });
+      } catch (error) {
+        yield put({ type: 'error', payload: error });
+      }
+    },
   },
   reducers: {
     saveAll: (state = initialState, { payload }) => {
-      return { ...state, loading: false, allCategories: payload };
+      return {
+        ...state,
+        loading: false,
+        allCategories: payload.map(({ id, data: { name, description } }) => ({
+          id,
+          name,
+          description,
+        })),
+      };
     },
-
-    saveById: (state = initialState, { payload }) => {
-      return { ...state, loading: false, currentCategory: payload };
+    saveById: (
+      state = initialState,
+      {
+        payload: {
+          id,
+          data: { name, description },
+        },
+      },
+    ) => {
+      return { ...state, loading: false, currentCategory: { id, name, description } };
     },
-
-    update: (state = initialState, { payload }) => {
-      return { ...state, loading: false, currentCategory: payload };
+    saveUpdate: (
+      state = initialState,
+      {
+        payload: {
+          id,
+          data: { name, description },
+        },
+      },
+    ) => {
+      return { ...state, loading: false, currentCategory: { id, name, description } };
     },
-
-    delete: (state = initialState, { payload }) => {
-      return { ...state, loading: false };
+    loading: (state = initialState) => {
+      return { ...state, loading: true, error: null };
     },
-
-    loading: (state = initialState, { payload }) => {
-      return { ...state, loading: true };
-    },
-
     error: (state = initialState, { payload }) => {
       return { ...state, loading: false, error: payload };
     },

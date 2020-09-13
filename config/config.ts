@@ -18,10 +18,9 @@ export default defineConfig({
     siderWidth: 208,
   },
   locale: {
-    // default zh-CN
     default: 'en-US',
     // default true, when it is true, will use `navigator.language` overwrite default
-    antd: true,
+    // antd: true,
     baseNavigator: true,
   },
   dynamicImport: {

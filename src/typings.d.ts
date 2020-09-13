@@ -1,3 +1,5 @@
+import { CategoryState } from './models/categories';
+
 declare module 'slash2';
 declare module '*.css';
 declare module '*.less';
@@ -41,4 +43,8 @@ export interface HTTPError {
   code: number;
   status: number;
   message: string;
+}
+
+export interface RootState {
+  categories: CategoryState;
 }

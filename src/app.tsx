@@ -5,7 +5,7 @@ import { history, RequestConfig } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { ResponseError } from 'umi-request';
-import { queryCurrent } from './services/user';
+// import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
 
 export async function getInitialState(): Promise<{
@@ -13,53 +13,51 @@ export async function getInitialState(): Promise<{
   settings?: LayoutSettings;
 }> {
   // If it is a login page, do not execute
-  if (true) {
-    try {
-      const currentUser: API.CurrentUser = {
-        name: 'Serati Ma',
-        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-        userid: '00000001',
-        signature: 'Be tolerant to diversity, tolerance is a virtue',
-        title: 'Interaction expert',
-        group:
-          'Ant Financial-XX Business Group-XX Platform Department-XX Technology Department-UED',
-        tags: [
-          {
-            key: '0',
-            label: 'Very thoughtful',
-          },
-          {
-            key: '1',
-            label: 'Focus on design',
-          },
-          {
-            key: '2',
-            label: 'Spicy~',
-          },
-          {
-            key: '3',
-            label: 'Long legs',
-          },
-          {
-            key: '4',
-            label: 'Chuan Meizi',
-          },
-          {
-            key: '5',
-            label: 'Inclusive of all rivers',
-          },
-        ],
-        unreadCount: 11,
-        access: 'admin',
-      };
-      return {
-        currentUser,
-        settings: defaultSettings,
-      };
-    } catch (error) {
-      history.push('/user/login');
-    }
+  try {
+    const currentUser: API.CurrentUser = {
+      name: 'Serati Ma',
+      avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+      userid: '00000001',
+      signature: 'Be tolerant to diversity, tolerance is a virtue',
+      title: 'Interaction expert',
+      group: 'Ant Financial-XX Business Group-XX Platform Department-XX Technology Department-UED',
+      tags: [
+        {
+          key: '0',
+          label: 'Very thoughtful',
+        },
+        {
+          key: '1',
+          label: 'Focus on design',
+        },
+        {
+          key: '2',
+          label: 'Spicy~',
+        },
+        {
+          key: '3',
+          label: 'Long legs',
+        },
+        {
+          key: '4',
+          label: 'Chuan Meizi',
+        },
+        {
+          key: '5',
+          label: 'Inclusive of all rivers',
+        },
+      ],
+      unreadCount: 11,
+      access: 'admin',
+    };
+    return {
+      currentUser,
+      settings: defaultSettings,
+    };
+  } catch (error) {
+    history.push('/user/login');
   }
+
   return {
     settings: defaultSettings,
   };
