@@ -60,7 +60,7 @@
     "react-helmet-async": "^1.0.4",
     "survey-creator": "^1.8.2",
     "survey-react": "^1.8.1",
-    "umi": "^3.2.0",
+    "umi": "^3.2.20",
     "umi-request": "^1.0.8",
     "use-merge-value": "^1.0.1"
   },
