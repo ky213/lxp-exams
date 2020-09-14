@@ -6,6 +6,13 @@ import { connect, useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '@/typings';
 import { ACTIONS, Category } from '@/models/categories';
+import {
+  ArrowRightOutlined,
+  CloseOutlined,
+  DeleteFilled,
+  DeleteOutlined,
+  EditFilled,
+} from '@ant-design/icons';
 
 export const Categories = () => {
   const categories = useSelector((state: RootState) => state.categories);
@@ -25,8 +32,8 @@ export const Categories = () => {
     },
     {
       title: 'Desciption',
-      dataIndex: 'desciprion',
-      key: 'desciprion',
+      dataIndex: 'description',
+      key: 'description',
     },
     {
       title: 'Action',
@@ -34,10 +41,14 @@ export const Categories = () => {
       render: (_text: string, record: Category) => (
         <Space size="middle">
           <Link to={`edit/${record.id}`}>
-            <a>Edit</a>
+            <a>
+              <EditFilled /> Edit
+            </a>
           </Link>
           <a>
-            <Typography.Text type="danger">Delete</Typography.Text>
+            <Typography.Text type="danger">
+              <DeleteFilled /> Delete
+            </Typography.Text>
           </a>
         </Space>
       ),

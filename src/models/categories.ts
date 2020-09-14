@@ -1,5 +1,5 @@
-import { Effect } from 'dva';
-import { Reducer, AnyAction } from 'redux';
+import { Effect, Reducer } from 'umi';
+import { AnyAction } from 'redux';
 
 import { HTTPError } from '@/typings';
 import { getAll, getById, create, update, remove } from '@/services//QuestionBank/categories';
@@ -26,6 +26,7 @@ export interface CategoriesModel {
     create: Effect;
     update: Effect;
     delete: Effect;
+    reset: Effect;
   };
   reducers: {
     saveAll: Reducer<CategoryState, AnyAction>;
@@ -33,6 +34,7 @@ export interface CategoriesModel {
     saveUpdate: Reducer<CategoryState, AnyAction>;
     loading: Reducer<CategoryState, AnyAction>;
     error: Reducer<CategoryState, AnyAction>;
+    resetState: Reducer<CategoryState, AnyAction>;
   };
 }
 
@@ -49,6 +51,7 @@ export enum ACTIONS {
   CREATE = 'categories/create',
   UPDATE = 'categories/update',
   DELETE = 'categories/delete',
+  RESET = 'categories/reset',
 }
 
 const CategoriesModel: CategoriesModel = {
@@ -100,13 +103,20 @@ const CategoriesModel: CategoriesModel = {
         yield put({ type: 'error', payload: error });
       }
     },
+    *reset(action, { put }) {
+      try {
+        yield put({ type: 'resetState' });
+      } catch (error) {
+        yield put({ type: 'error', payload: error });
+      }
+    },
   },
   reducers: {
     saveAll: (state = initialState, { payload }) => {
       return {
         ...state,
         loading: false,
-        allCategories: payload.map(({ id, data: { name, description } }) => ({
+        allCategories: payload.map(({ id, data: { name, description } }: any) => ({
           id,
           name,
           description,
@@ -140,6 +150,9 @@ const CategoriesModel: CategoriesModel = {
     },
     error: (state = initialState, { payload }) => {
       return { ...state, loading: false, error: payload };
+    },
+    resetState: (state = initialState, { payload }) => {
+      return { ...state, currentCategory: null, loading: false, error: null };
     },
   },
 };

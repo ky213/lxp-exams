@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'dva';
 import { useParams, useHistory } from 'umi';
 import { Card, Form, Button, Space, Row, Col, Input } from 'antd';
@@ -8,13 +9,13 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { RootState } from '@/typings';
 import { Category, ACTIONS } from '@/models/categories';
 
-export interface CreateEditCategoryProps extends StatProps {}
+export interface CreateEditCategoryProps extends RouteComponentProps, StateProps {}
 
-export const CreateEditCategory = ({ categories }: CreateEditCategoryProps) => {
-  const { currentCategory } = useSelector((state: RootState) => state.categories);
-  const dispatch = useDispatch();
+export const CreateEditCategory: React.FC<CreateEditCategoryProps> = ({ categories }) => {
+  const { currentCategory, loading } = useSelector((state: RootState) => state.categories);
   const params: { id: string } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (params.id)
@@ -22,6 +23,12 @@ export const CreateEditCategory = ({ categories }: CreateEditCategoryProps) => {
         type: ACTIONS.GET_BY_ID,
         payload: params.id,
       });
+
+    return () => {
+      dispatch({
+        type: ACTIONS.RESET,
+      });
+    };
   }, []);
 
   const handleSubmit = (values: Omit<Category, 'id'>) => {
@@ -35,21 +42,29 @@ export const CreateEditCategory = ({ categories }: CreateEditCategoryProps) => {
         type: ACTIONS.CREATE,
         payload: values,
       });
-
-    console.log('PARAMS::::', params);
   };
 
   return (
     <PageContainer title="Create/Edit Category">
-      <Card>
+      <Card loading={loading}>
         <Row>
           <Col span={12} offset={6}>
             <Form layout="vertical" size="large" onFinish={handleSubmit}>
-              <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-                <Input defaultValue={currentCategory?.name} />
+              <Form.Item
+                name="name"
+                label="Name"
+                initialValue={currentCategory?.name}
+                rules={[{ required: true }]}
+              >
+                <Input />
               </Form.Item>
-              <Form.Item name="description" label="Description" rules={[{ required: true }]}>
-                <Input.TextArea rows={4} defaultValue={currentCategory?.description} />
+              <Form.Item
+                name="description"
+                label="Description"
+                initialValue={currentCategory?.description}
+                rules={[{ required: true }]}
+              >
+                <Input.TextArea rows={4} />
               </Form.Item>
               <Form.Item>
                 <Space>
@@ -71,6 +86,6 @@ const mapStateToProps = ({ categories }: RootState) => ({
   categories,
 });
 
-type StatProps = ReturnType<typeof mapStateToProps>;
+type StateProps = ReturnType<typeof mapStateToProps>;
 
 export default connect(mapStateToProps)(CreateEditCategory);
