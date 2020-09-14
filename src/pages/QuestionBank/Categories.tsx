@@ -1,21 +1,15 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Table, Tag, Space, Typography } from 'antd';
+import { Table, Space, Typography, Popconfirm } from 'antd';
 import { Link } from 'umi';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '@/typings';
 import { ACTIONS, Category } from '@/models/categories';
-import {
-  ArrowRightOutlined,
-  CloseOutlined,
-  DeleteFilled,
-  DeleteOutlined,
-  EditFilled,
-} from '@ant-design/icons';
+import { DeleteFilled, EditFilled } from '@ant-design/icons';
 
 export const Categories = () => {
-  const categories = useSelector((state: RootState) => state.categories);
+  const { allCategories, loading } = useSelector((state: RootState) => state.categories);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,6 +17,13 @@ export const Categories = () => {
       type: ACTIONS.GET_ALL,
     });
   }, []);
+
+  const handleDelete = (category: Category) => {
+    dispatch({
+      type: ACTIONS.DELETE,
+      payload: category.id,
+    });
+  };
 
   const columns = [
     {
@@ -45,11 +46,16 @@ export const Categories = () => {
               <EditFilled /> Edit
             </a>
           </Link>
-          <a>
-            <Typography.Text type="danger">
-              <DeleteFilled /> Delete
-            </Typography.Text>
-          </a>
+          <Popconfirm
+            title="Are you sure to delete this category?"
+            onConfirm={() => handleDelete(record)}
+          >
+            <a>
+              <Typography.Text type="danger">
+                <DeleteFilled /> Delete
+              </Typography.Text>
+            </a>
+          </Popconfirm>
         </Space>
       ),
     },
@@ -57,12 +63,7 @@ export const Categories = () => {
 
   return (
     <PageContainer title="Categories">
-      <Table
-        columns={columns}
-        dataSource={categories.allCategories}
-        showSorterTooltip
-        loading={categories.loading}
-      />
+      <Table columns={columns} dataSource={allCategories} showSorterTooltip loading={loading} />
     </PageContainer>
   );
 };

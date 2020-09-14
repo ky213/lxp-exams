@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const { REACT_APP_ENV } = process.env;
-const PORT = 8000;
+const PORT = 8080;
 const url = {
   dev: `http://localhost:${PORT}`,
 };
