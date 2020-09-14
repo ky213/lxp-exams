@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'dva';
 import { useParams, useHistory } from 'umi';
-import { Card, Form, Button, Space, Row, Col, Input, message } from 'antd';
+import { Card, Form, Button, Space, Row, Col, Input, message, Alert } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 
 import { RootState } from '@/typings';
@@ -56,6 +56,19 @@ export const CreateEditCategory: React.FC<CreateEditCategoryProps> = ({ categori
   return (
     <PageContainer title="Create/Edit Category">
       <Card loading={loading}>
+        <Row justify="center">
+          <Col span={12}>
+            {error && (
+              <Alert
+                message="Error"
+                description={error.message || 'unknown error'}
+                type="error"
+                showIcon
+                closable
+              />
+            )}
+          </Col>
+        </Row>
         <Row>
           <Col span={12} offset={6}>
             <Form layout="vertical" size="large" onFinish={handleSubmit}>
