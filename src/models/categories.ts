@@ -45,7 +45,7 @@ const initialState: CategoryState = {
   error: null,
 };
 
-export enum ACTIONS {
+export enum CATEGORIES_ACTIONS {
   GET_ALL = 'categories/getAll',
   GET_BY_ID = 'categories/getById',
   CREATE = 'categories/create',

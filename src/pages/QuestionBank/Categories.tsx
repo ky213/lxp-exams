@@ -5,7 +5,7 @@ import { Link } from 'umi';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '@/typings';
-import { ACTIONS, Category } from '@/models/categories';
+import { CATEGORIES_ACTIONS, Category } from '@/models/categories';
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
 
 export const Categories = () => {
@@ -14,13 +14,13 @@ export const Categories = () => {
 
   useEffect(() => {
     dispatch({
-      type: ACTIONS.GET_ALL,
+      type: CATEGORIES_ACTIONS.GET_ALL,
     });
   }, []);
 
   const handleDelete = (category: Category) => {
     dispatch({
-      type: ACTIONS.DELETE,
+      type: CATEGORIES_ACTIONS.DELETE,
       payload: category.id,
     });
   };

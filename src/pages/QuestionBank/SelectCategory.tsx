@@ -1,9 +1,37 @@
-import React, { useEffect } from 'react';
-import { Link } from 'umi';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import {
+  Link,
+  useSelector,
+  useDispatch,
+  CATEGORIES_ACTIONS,
+  IRouteComponentProps,
+  Category,
+} from 'umi';
 import { Card, Form, Select, Button, Space, Row, Col, Divider } from 'antd';
 import { ArrowRightOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons';
 
-export const SelectCategory = () => {
+import { RootState } from '@/typings';
+import Categories from './Categories';
+
+export interface SelectCategoryProps {
+  onSelectedCategory: Dispatch<SetStateAction<Category | undefined>>;
+}
+
+export const SelectCategory = (props: SelectCategoryProps) => {
+  const { allCategories } = useSelector((state: RootState) => state.categories);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: CATEGORIES_ACTIONS.GET_ALL,
+    });
+  }, []);
+
+  const handleSubmit = (values: { categoryId: string }) => {
+    const selectedCategory = allCategories.find(({ id }) => id == values.categoryId);
+    props.onSelectedCategory(selectedCategory);
+  };
+
   const dropdownRender = (menu: React.ReactNode) => (
     <div>
       {menu}
@@ -24,19 +52,18 @@ export const SelectCategory = () => {
     </div>
   );
 
-  const handleSubmit = (values: {}) => {
-    console.log(values);
-  };
-
   return (
     <Card>
       <Row>
         <Col span={12} offset={6}>
           <Form layout="vertical" size="large" onFinish={handleSubmit}>
-            <Form.Item label="Category" name="category" rules={[{ required: true }]}>
-              <Select dropdownRender={dropdownRender}>
-                <Select.Option value="demo">Demo</Select.Option>
-                <Select.Option value="">no category...</Select.Option>
+            <Form.Item label="Category" name="categoryId" rules={[{ required: true }]}>
+              <Select dropdownRender={dropdownRender} placeholder="select category...">
+                {allCategories.map((category) => (
+                  <Select.Option key={category.id} value={category.id}>
+                    {category.name}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
             <Form.Item>

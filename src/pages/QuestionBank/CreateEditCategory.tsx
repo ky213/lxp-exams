@@ -7,7 +7,7 @@ import { Card, Form, Button, Space, Row, Col, Input } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 
 import { RootState } from '@/typings';
-import { Category, ACTIONS } from '@/models/categories';
+import { Category, CATEGORIES_ACTIONS } from '@/models/categories';
 
 export interface CreateEditCategoryProps extends RouteComponentProps, StateProps {}
 
@@ -20,13 +20,13 @@ export const CreateEditCategory: React.FC<CreateEditCategoryProps> = ({ categori
   useEffect(() => {
     if (params.id)
       dispatch({
-        type: ACTIONS.GET_BY_ID,
+        type: CATEGORIES_ACTIONS.GET_BY_ID,
         payload: params.id,
       });
 
     return () => {
       dispatch({
-        type: ACTIONS.RESET,
+        type: CATEGORIES_ACTIONS.RESET,
       });
     };
   }, []);
@@ -34,12 +34,12 @@ export const CreateEditCategory: React.FC<CreateEditCategoryProps> = ({ categori
   const handleSubmit = (values: Omit<Category, 'id'>) => {
     if (params.id)
       dispatch({
-        type: ACTIONS.UPDATE,
+        type: CATEGORIES_ACTIONS.UPDATE,
         payload: { id: params.id, ...values },
       });
     else
       dispatch({
-        type: ACTIONS.CREATE,
+        type: CATEGORIES_ACTIONS.CREATE,
         payload: values,
       });
   };

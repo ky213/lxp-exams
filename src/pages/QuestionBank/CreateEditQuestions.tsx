@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react';
-import { HeartTwoTone, SmileTwoTone } from '@ant-design/icons';
-import { Card, Typography, Alert } from 'antd';
+import React, { useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 
 import SurveyCreator from './SurveyCreator';
 import SelectCategory from './SelectCategory';
+import { Category } from 'umi';
 
-export default (): React.ReactNode => {
+export interface CreateEditCategoryProps {}
+
+const CreateEditCategory: React.FC<CreateEditCategoryProps> = () => {
+  const [selectedCategory, setSelectedCategory]: [Category | null, any] = useState(null);
+
   return (
     <PageContainer>
-      <SelectCategory />
-      {/* <SurveyCreator /> */}
+      {selectedCategory && <SurveyCreator />}
+      {!selectedCategory && <SelectCategory onSelectedCategory={setSelectedCategory} />}
     </PageContainer>
   );
 };
+
+export default CreateEditCategory;
