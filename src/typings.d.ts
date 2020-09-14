@@ -41,7 +41,7 @@ declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
 
 export interface HTTPError {
   code: number;
-  status: number;
+  status: number | string;
   message: string;
 }
 

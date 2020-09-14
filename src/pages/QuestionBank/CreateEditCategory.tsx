@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'dva';
 import { useParams, useHistory } from 'umi';
-import { Card, Form, Button, Space, Row, Col, Input } from 'antd';
+import { Card, Form, Button, Space, Row, Col, Input, message } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 
 import { RootState } from '@/typings';
@@ -12,10 +12,12 @@ import { Category, CATEGORIES_ACTIONS } from '@/models/categories';
 export interface CreateEditCategoryProps extends RouteComponentProps, StateProps {}
 
 export const CreateEditCategory: React.FC<CreateEditCategoryProps> = ({ categories }) => {
-  const { currentCategory, loading } = useSelector((state: RootState) => state.categories);
   const params: { id: string } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  const { currentCategory, loading, error, saveSuccess } = useSelector(
+    (state: RootState) => state.categories,
+  );
 
   useEffect(() => {
     if (params.id)
@@ -31,8 +33,15 @@ export const CreateEditCategory: React.FC<CreateEditCategoryProps> = ({ categori
     };
   }, []);
 
+  useEffect(() => {
+    if (!loading && saveSuccess) {
+      message.success('Category saved successfully');
+      history.push('/questions/categories/list');
+    }
+  }, [saveSuccess]);
+
   const handleSubmit = (values: Omit<Category, 'id'>) => {
-    if (params.id)
+    if (currentCategory && currentCategory.id)
       dispatch({
         type: CATEGORIES_ACTIONS.UPDATE,
         payload: { id: params.id, ...values },
@@ -68,7 +77,7 @@ export const CreateEditCategory: React.FC<CreateEditCategoryProps> = ({ categori
               </Form.Item>
               <Form.Item>
                 <Space>
-                  <Button type="primary" htmlType="submit" loading={categories.loading}>
+                  <Button type="primary" htmlType="submit" loading={loading}>
                     Save
                   </Button>
                   <Button onClick={() => history.goBack()}>Cancel</Button>

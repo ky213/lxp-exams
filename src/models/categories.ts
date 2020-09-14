@@ -14,6 +14,7 @@ export interface CategoryState {
   allCategories: Category[];
   currentCategory: Category | null;
   loading: boolean;
+  saveSuccess: boolean;
   error: HTTPError | null;
 }
 
@@ -30,7 +31,7 @@ export interface CategoriesModel {
   };
   reducers: {
     saveAll: Reducer<CategoryState, AnyAction>;
-    saveById: Reducer<CategoryState, AnyAction>;
+    saveOne: Reducer<CategoryState, AnyAction>;
     saveUpdate: Reducer<CategoryState, AnyAction>;
     loading: Reducer<CategoryState, AnyAction>;
     error: Reducer<CategoryState, AnyAction>;
@@ -42,6 +43,7 @@ const initialState: CategoryState = {
   allCategories: [],
   currentCategory: null,
   loading: false,
+  saveSuccess: false,
   error: null,
 };
 
@@ -71,7 +73,7 @@ const CategoriesModel: CategoriesModel = {
       try {
         yield put({ type: 'loading' });
         const { data } = yield call(getById, action.payload);
-        yield put({ type: 'saveById', payload: data[0] });
+        yield put({ type: 'saveOne', payload: data[0] });
       } catch (error) {
         yield put({ type: 'error', payload: error });
       }
@@ -79,8 +81,8 @@ const CategoriesModel: CategoriesModel = {
     *create(action, { call, put }) {
       try {
         yield put({ type: 'loading' });
-        yield call(create(action.payload));
-        yield put({ type: 'getAll' });
+        const { data } = yield call(create, action.payload);
+        yield put({ type: 'saveUpdate', payload: data });
       } catch (error) {
         yield put({ type: 'error', payload: error });
       }
@@ -88,8 +90,8 @@ const CategoriesModel: CategoriesModel = {
     *update(action, { call, put }) {
       try {
         yield put({ type: 'loading' });
-        const category = yield call(update(action.payload));
-        yield put({ type: 'saveUpdate', payload: category });
+        const { data } = yield call(update, action.payload);
+        yield put({ type: 'saveUpdate', payload: data });
       } catch (error) {
         yield put({ type: 'error', payload: error });
       }
@@ -123,7 +125,7 @@ const CategoriesModel: CategoriesModel = {
         })),
       };
     },
-    saveById: (
+    saveOne: (
       state = initialState,
       {
         payload: {
@@ -132,7 +134,11 @@ const CategoriesModel: CategoriesModel = {
         },
       },
     ) => {
-      return { ...state, loading: false, currentCategory: { id, name, description } };
+      return {
+        ...state,
+        loading: false,
+        currentCategory: { id, name, description },
+      };
     },
     saveUpdate: (
       state = initialState,
@@ -143,16 +149,21 @@ const CategoriesModel: CategoriesModel = {
         },
       },
     ) => {
-      return { ...state, loading: false, currentCategory: { id, name, description } };
+      return {
+        ...state,
+        loading: false,
+        saveSuccess: true,
+        currentCategory: { id, name, description },
+      };
     },
     loading: (state = initialState) => {
-      return { ...state, loading: true, error: null };
+      return { ...state, loading: true, saveSuccess: false, error: null };
     },
     error: (state = initialState, { payload }) => {
-      return { ...state, loading: false, error: payload };
+      return { ...state, loading: false, saveSuccess: false, error: payload };
     },
     resetState: (state = initialState, { payload }) => {
-      return { ...state, currentCategory: null, loading: false, error: null };
+      return { ...initialState };
     },
   },
 };
