@@ -32,10 +32,4 @@ declare namespace API {
     extra: any;
     status: string;
   }
-
-  export interface QuestionCategory {
-    id: string;
-    name: string;
-    description: string;
-  }
 }

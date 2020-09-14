@@ -3,24 +3,27 @@ import { AnyAction } from 'redux';
 
 import { HTTPError } from '@/typings';
 import { getAll, getById, create, update, remove } from '@/services//QuestionBank/categories';
+import { Category } from '@/models/categories';
 
-export interface Category {
+export interface Question {
   id: string;
-  name: string;
+  title: string;
   description: string;
+  category: Category;
+  content: string;
 }
 
-export interface CategoryState {
-  allCategories: Category[];
-  currentCategory: Category | null;
+export interface QuestionState {
+  allQuestions: Question[];
+  currentQuestion: Question | null;
   loading: boolean;
   saveSuccess: boolean;
   error: HTTPError | null;
 }
 
-export interface CategoriesModel {
-  namespace: 'categories';
-  state: CategoryState;
+export interface QuestionsModel {
+  namespace: 'questions';
+  state: QuestionState;
   effects: {
     getAll: Effect;
     getById: Effect;
@@ -30,34 +33,34 @@ export interface CategoriesModel {
     reset: Effect;
   };
   reducers: {
-    saveAll: Reducer<CategoryState, AnyAction>;
-    saveOne: Reducer<CategoryState, AnyAction>;
-    saveUpdate: Reducer<CategoryState, AnyAction>;
-    loading: Reducer<CategoryState, AnyAction>;
-    error: Reducer<CategoryState, AnyAction>;
-    resetState: Reducer<CategoryState, AnyAction>;
+    saveAll: Reducer<QuestionState, AnyAction>;
+    saveOne: Reducer<QuestionState, AnyAction>;
+    saveUpdate: Reducer<QuestionState, AnyAction>;
+    loading: Reducer<QuestionState, AnyAction>;
+    error: Reducer<QuestionState, AnyAction>;
+    resetState: Reducer<QuestionState, AnyAction>;
   };
 }
 
-const initialState: CategoryState = {
-  allCategories: [],
-  currentCategory: null,
+const initialState: QuestionState = {
+  allQuestions: [],
+  currentQuestion: null,
   loading: false,
   saveSuccess: false,
   error: null,
 };
 
-export enum CATEGORIES_ACTIONS {
-  GET_ALL = 'categories/getAll',
-  GET_BY_ID = 'categories/getById',
-  CREATE = 'categories/create',
-  UPDATE = 'categories/update',
-  DELETE = 'categories/delete',
-  RESET = 'categories/reset',
+export enum QUESTIONS_ACTIONS {
+  GET_ALL = 'questions/getAll',
+  GET_BY_ID = 'questions/getById',
+  CREATE = 'questions/create',
+  UPDATE = 'questions/update',
+  DELETE = 'questions/delete',
+  RESET = 'questions/reset',
 }
 
-const CategoriesModel: CategoriesModel = {
-  namespace: 'categories',
+const QuestionsModel: QuestionsModel = {
+  namespace: 'questions',
   state: initialState,
   effects: {
     *getAll(_, { call, put }) {
@@ -118,42 +121,22 @@ const CategoriesModel: CategoriesModel = {
       return {
         ...state,
         loading: false,
-        allCategories: payload.map(({ id, data: { name, description } }: any) => ({
-          id,
-          name,
-          description,
-        })),
+        allQuestions: payload,
       };
     },
-    saveOne: (
-      state = initialState,
-      {
-        payload: {
-          id,
-          data: { name, description },
-        },
-      },
-    ) => {
+    saveOne: (state = initialState, { payload }) => {
       return {
         ...state,
         loading: false,
-        currentCategory: { id, name, description },
+        currentQuestion: payload,
       };
     },
-    saveUpdate: (
-      state = initialState,
-      {
-        payload: {
-          id,
-          data: { name, description },
-        },
-      },
-    ) => {
+    saveUpdate: (state = initialState, { payload }) => {
       return {
         ...state,
         loading: false,
         saveSuccess: true,
-        currentCategory: { id, name, description },
+        currentQuestion: payload,
       };
     },
     loading: (state = initialState) => {
@@ -168,4 +151,4 @@ const CategoriesModel: CategoriesModel = {
   },
 };
 
-export default CategoriesModel;
+export default QuestionsModel;

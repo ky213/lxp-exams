@@ -1,20 +1,21 @@
 import axios from '@/utils/axios';
+import { Category } from '@/models/categories';
 
 export async function getAll(): Promise<any> {
-  return axios.get<API.QuestionCategory[]>('/api/questionbank/categories');
+  return axios.get<Category[]>('/api/questionbank/categories');
 }
 
 export async function getById(id: string): Promise<any> {
-  return axios.get<API.QuestionCategory>(`/api/questionbank/categories/?id=${id}`);
+  return axios.get<Category>(`/api/questionbank/categories/?id=${id}`);
 }
 
-export async function create(data: Omit<API.QuestionCategory, 'id'>): Promise<any> {
+export async function create(data: Omit<Category, 'id'>): Promise<any> {
   return axios.post<any>('/api/questionbank/categories', {
     data,
   });
 }
 
-export async function update(data: Partial<API.QuestionCategory>): Promise<any> {
+export async function update(data: Partial<Category>): Promise<any> {
   return axios.put<any>('/api/questionbank/categories', {
     method: 'PUT',
     data,
