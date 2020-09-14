@@ -2,7 +2,7 @@ import { Effect, Reducer } from 'umi';
 import { AnyAction } from 'redux';
 
 import { HTTPError } from '@/typings';
-import { getAll, getById, create, update, remove } from '@/services//QuestionBank/categories';
+import { getAll, getById, create, update, remove } from '@/services//QuestionBank/questions';
 import { Category } from '@/models/categories';
 
 export interface Question {

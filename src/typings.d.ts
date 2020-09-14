@@ -1,4 +1,5 @@
 import { CategoryState } from './models/categories';
+import { QuestionState } from './models/questions';
 
 declare module 'slash2';
 declare module '*.css';
@@ -46,5 +47,6 @@ export interface HTTPError {
 }
 
 export interface RootState {
+  questions: QuestionState;
   categories: CategoryState;
 }

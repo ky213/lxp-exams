@@ -18,7 +18,7 @@ export const routes = [
       {
         path: 'list',
         name: 'List',
-        component: './Welcome',
+        component: './QuestionBank/Questions',
       },
       {
         path: 'edit',
