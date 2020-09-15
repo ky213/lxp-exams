@@ -6,7 +6,7 @@ import { getAll, getById, create, update, remove } from '@/services//QuestionBan
 import { Category } from '@/models/categories';
 
 export interface Question {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: Category;
@@ -136,7 +136,6 @@ const QuestionsModel: QuestionsModel = {
         ...state,
         loading: false,
         saveSuccess: true,
-        currentQuestion: payload,
       };
     },
     loading: (state = initialState) => {

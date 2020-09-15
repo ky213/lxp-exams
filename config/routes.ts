@@ -12,7 +12,7 @@ export const routes = [
   },
   {
     path: '/questions',
-    name: 'Question Bank',
+    name: 'Questions',
     icon: 'QuestionOutlined',
     routes: [
       {
@@ -22,7 +22,7 @@ export const routes = [
       },
       {
         path: 'edit',
-        name: 'Creator',
+        name: 'Create',
         component: './QuestionBank/CreateEditQuestions',
       },
       {

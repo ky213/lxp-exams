@@ -8,6 +8,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 
 import { RootState } from '@/typings';
 import { Category, CATEGORIES_ACTIONS } from '@/models/categories';
+import { Action } from 'survey-creator';
 
 export interface CreateEditCategoryProps extends RouteComponentProps, StateProps {}
 
@@ -40,17 +41,16 @@ export const CreateEditCategory: React.FC<CreateEditCategoryProps> = ({ categori
     }
   }, [saveSuccess]);
 
-  const handleSubmit = (values: Omit<Category, 'id'>) => {
-    if (currentCategory && currentCategory.id)
-      dispatch({
-        type: CATEGORIES_ACTIONS.UPDATE,
-        payload: { id: params.id, ...values },
-      });
-    else
-      dispatch({
-        type: CATEGORIES_ACTIONS.CREATE,
-        payload: values,
-      });
+  const handleSubmit = (values: Category) => {
+    const ACTION =
+      currentCategory && currentCategory._id
+        ? CATEGORIES_ACTIONS.UPDATE
+        : CATEGORIES_ACTIONS.CREATE;
+
+    dispatch({
+      type: ACTION,
+      payload: values,
+    });
   };
 
   return (

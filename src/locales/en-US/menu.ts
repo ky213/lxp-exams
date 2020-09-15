@@ -49,4 +49,10 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
+  'menu.Questions': 'Questions',
+  'menu.Questions.List': 'List',
+  'menu.Questions.Create': 'Create',
+  'menu.Questions.Categories': 'Categories',
+  'menu.Questions.Categories.List': 'List',
+  'menu.Questions.Categories.Create': 'Create',
 };

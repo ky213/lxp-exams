@@ -43,7 +43,9 @@ export const SelectCategory = (props: SelectCategoryProps) => {
   }, []);
 
   const handleSubmit = (values: { categoryId: string }) => {
-    const selectedCategory = categories.allCategories.find(({ id }) => id == values.categoryId);
+    const selectedCategory = categories.allCategories.find(
+      ({ _id: id }) => id == values.categoryId,
+    );
     props.onSelectedCategory(selectedCategory);
   };
 
@@ -83,7 +85,7 @@ export const SelectCategory = (props: SelectCategoryProps) => {
             <Form.Item label="Category" name="categoryId" rules={[{ required: true }]}>
               <Select dropdownRender={dropdownRender} placeholder="select category...">
                 {categories.allCategories.map((category) => (
-                  <Select.Option key={category.id} value={category.id}>
+                  <Select.Option key={category._id} value={category._id}>
                     {category.name}
                   </Select.Option>
                 ))}

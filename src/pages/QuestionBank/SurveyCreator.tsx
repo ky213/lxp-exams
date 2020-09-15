@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
-import { Button, Card, Col, Row, Space } from 'antd';
-import { SurveyCreator, StylesManager } from 'survey-creator';
-import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Row } from 'antd';
+import { SurveyCreator, StylesManager, SurveyObjects } from 'survey-creator';
+import { UploadOutlined } from '@ant-design/icons';
 
-export default (props: any) => {
-  let surveyCreator: SurveyCreator;
+export interface SurveyCreatorProps {
+  saveSurvey: (survey: SurveyObjects) => void;
+}
+
+let surveyCreator: SurveyCreator | undefined | null = null;
+
+const SurveyCreatorComponent: React.FC<SurveyCreatorProps> = ({ saveSurvey }) => {
   useEffect(() => {
     StylesManager.applyTheme('');
     var options = {
@@ -16,15 +21,11 @@ export default (props: any) => {
     surveyCreator = new SurveyCreator('creatorElement', options);
   }, []);
 
-  const handleSubmit = () => {
-    console.log(surveyCreator.JSON);
-  };
-
   return (
     <Card>
       <Row justify="end">
         <Col span={6} style={{ marginLeft: '5px' }}>
-          <Button size="large" type="primary" block onClick={handleSubmit}>
+          <Button size="large" type="primary" block onClick={() => saveSurvey(surveyCreator?.JSON)}>
             <UploadOutlined /> Done
           </Button>
         </Col>
@@ -37,3 +38,5 @@ export default (props: any) => {
     </Card>
   );
 };
+
+export default SurveyCreatorComponent;

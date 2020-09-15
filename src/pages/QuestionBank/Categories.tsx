@@ -21,7 +21,7 @@ export const Categories = () => {
   const handleDelete = (category: Category) => {
     dispatch({
       type: CATEGORIES_ACTIONS.DELETE,
-      payload: category.id,
+      payload: category._id,
     });
   };
 
@@ -41,7 +41,7 @@ export const Categories = () => {
       key: 'action',
       render: (_text: string, record: Category) => (
         <Space size="middle">
-          <Link to={`edit/${record.id}`}>
+          <Link to={`edit/${record._id}`}>
             <a>
               <EditFilled /> Edit
             </a>

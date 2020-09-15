@@ -5,7 +5,7 @@ import { HTTPError } from '@/typings';
 import { getAll, getById, create, update, remove } from '@/services//QuestionBank/categories';
 
 export interface Category {
-  id: string;
+  _id: string;
   name: string;
   description: string;
 }
@@ -118,42 +118,21 @@ const CategoriesModel: CategoriesModel = {
       return {
         ...state,
         loading: false,
-        allCategories: payload.map(({ id, data: { name, description } }: any) => ({
-          id,
-          name,
-          description,
-        })),
+        allCategories: payload,
       };
     },
-    saveOne: (
-      state = initialState,
-      {
-        payload: {
-          id,
-          data: { name, description },
-        },
-      },
-    ) => {
+    saveOne: (state = initialState, { payload }) => {
       return {
         ...state,
         loading: false,
-        currentCategory: { id, name, description },
+        currentCategory: payload,
       };
     },
-    saveUpdate: (
-      state = initialState,
-      {
-        payload: {
-          id,
-          data: { name, description },
-        },
-      },
-    ) => {
+    saveUpdate: (state = initialState) => {
       return {
         ...state,
         loading: false,
         saveSuccess: true,
-        currentCategory: { id, name, description },
       };
     },
     loading: (state = initialState) => {

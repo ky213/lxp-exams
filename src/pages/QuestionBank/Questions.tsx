@@ -21,7 +21,7 @@ export const Questions = () => {
   const handleDelete = (question: Question) => {
     dispatch({
       type: QUESTIONS_ACTIONS.DELETE,
-      payload: question.id,
+      payload: question._id,
     });
   };
 
@@ -46,7 +46,7 @@ export const Questions = () => {
       key: 'action',
       render: (_text: string, record: Question) => (
         <Space size="middle">
-          <Link to={`edit/${record.id}`}>
+          <Link to={`edit/${record._id}`}>
             <a>
               <EditFilled /> Edit
             </a>
