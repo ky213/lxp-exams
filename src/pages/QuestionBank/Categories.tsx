@@ -42,9 +42,7 @@ export const Categories = () => {
       render: (_text: string, record: Category) => (
         <Space size="middle">
           <Link to={`edit/${record._id}`}>
-            <a>
-              <EditFilled /> Edit
-            </a>
+            <EditFilled /> Edit
           </Link>
           <Popconfirm
             title="Are you sure to delete this category?"

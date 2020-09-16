@@ -6,7 +6,7 @@ export async function getAll(): Promise<any> {
 }
 
 export async function getById(id: string): Promise<any> {
-  return axios.get<Question>(`/api/questionbanks/questions/?id=${id}`);
+  return axios.get<Question>(`/api/questionbanks/questions/${id}`);
 }
 
 export async function create(data: Omit<Question, 'id'>): Promise<any> {
@@ -18,5 +18,5 @@ export async function update(data: Partial<Question>): Promise<any> {
 }
 
 export async function remove(id: string): Promise<any> {
-  return axios.delete<any>(`/api/questionbanks/questions/?id=${id}`);
+  return axios.delete<any>(`/api/questionbanks/questions/${id}`);
 }

@@ -1,4 +1,6 @@
-export const routes = [
+import { IRoute } from 'umi';
+
+export const routes: IRoute[] = [
   {
     path: '/user',
     layout: false,

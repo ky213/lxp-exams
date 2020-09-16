@@ -34,16 +34,17 @@ export const SelectCategory = (props: SelectCategoryProps) => {
         type: QUESTIONS_ACTIONS.GET_BY_ID,
         payload: params.id,
       });
-
-    return () => {
-      dispatch({
-        type: QUESTIONS_ACTIONS.RESET,
-      });
-    };
   }, []);
 
   const handleSubmit = (values: Question) => {
     props.onQuestionDataSave(values);
+  };
+
+  const handleCancel = () => {
+    dispatch({
+      type: QUESTIONS_ACTIONS.RESET,
+    });
+    history.goBack();
   };
 
   const dropdownRender = (menu: React.ReactNode) => (
@@ -105,7 +106,7 @@ export const SelectCategory = (props: SelectCategoryProps) => {
                 <Button type="primary" htmlType="submit" icon={<ArrowRightOutlined />}>
                   Next
                 </Button>
-                <Button icon={<CloseOutlined />} onClick={() => history.goBack()}>
+                <Button icon={<CloseOutlined />} onClick={handleCancel}>
                   Cancel
                 </Button>
               </Space>

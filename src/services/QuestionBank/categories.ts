@@ -6,7 +6,7 @@ export async function getAll(): Promise<any> {
 }
 
 export async function getById(id: string): Promise<any> {
-  return axios.get<Category>(`/api/questionbanks/categories/?id=${id}`);
+  return axios.get<Category>(`/api/questionbanks/categories/${id}`);
 }
 
 export async function create(data: Omit<Category, 'id'>): Promise<any> {
@@ -18,5 +18,5 @@ export async function update(data: Partial<Category>): Promise<any> {
 }
 
 export async function remove(id: string): Promise<any> {
-  return axios.delete<any>(`/api/questionbanks/categories/?id=${id}`);
+  return axios.delete<any>(`/api/questionbanks/categories/${id}`);
 }

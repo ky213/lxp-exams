@@ -21,12 +21,6 @@ const CreateEditCategory: React.FC<CreateEditCategoryProps> = () => {
   );
 
   useEffect(() => {
-    if (params.id)
-      dispatch({
-        type: QUESTIONS_ACTIONS.GET_BY_ID,
-        payload: params.id,
-      });
-
     return () => {
       dispatch({
         type: QUESTIONS_ACTIONS.RESET,

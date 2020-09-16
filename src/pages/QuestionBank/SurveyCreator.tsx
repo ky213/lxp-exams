@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Button, Card, Col, Row } from 'antd';
 import { SurveyCreator, StylesManager, SurveyObjects } from 'survey-creator';
-import { UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, UploadOutlined } from '@ant-design/icons';
 import { RootState } from '@/typings';
-import { useSelector } from 'umi';
+import { QUESTIONS_ACTIONS, useDispatch, useHistory, useSelector } from 'umi';
 
 export interface SurveyCreatorProps {
   saveSurvey: (survey: SurveyObjects) => void;
@@ -13,12 +13,17 @@ let surveyCreator: SurveyCreator | undefined | null = null;
 
 const SurveyCreatorComponent: React.FC<SurveyCreatorProps> = ({ saveSurvey }) => {
   const { currentQuestion, loading } = useSelector((state: RootState) => state.questions);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     initSurveyCreator();
 
     return () => {
       surveyCreator = null;
+      dispatch({
+        type: QUESTIONS_ACTIONS.RESET,
+      });
     };
   }, []);
 
@@ -38,7 +43,12 @@ const SurveyCreatorComponent: React.FC<SurveyCreatorProps> = ({ saveSurvey }) =>
 
   return (
     <Card>
-      <Row justify="end">
+      <Row justify="end" style={{ marginBottom: '20px' }}>
+        <Col span={6} style={{ marginLeft: '5px' }}>
+          <Button size="large" block onClick={() => history.push('/questions/list')}>
+            <CloseOutlined /> Cancel
+          </Button>
+        </Col>
         <Col span={6} style={{ marginLeft: '5px' }}>
           <Button
             size="large"

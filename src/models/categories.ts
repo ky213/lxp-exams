@@ -73,7 +73,7 @@ const CategoriesModel: CategoriesModel = {
       try {
         yield put({ type: 'loading' });
         const { data } = yield call(getById, action.payload);
-        yield put({ type: 'saveOne', payload: data[0] });
+        yield put({ type: 'saveOne', payload: data });
       } catch (error) {
         yield put({ type: 'error', payload: error });
       }
