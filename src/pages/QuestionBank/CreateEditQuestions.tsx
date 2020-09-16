@@ -3,15 +3,16 @@ import { PageContainer } from '@ant-design/pro-layout';
 
 import SurveyCreator from './SurveyCreator';
 import SelectCategory from './SelectCategory';
-import { Category, QUESTIONS_ACTIONS, useDispatch, useHistory, useParams, useSelector } from 'umi';
+import { QUESTIONS_ACTIONS, useDispatch, useHistory, useParams, useSelector } from 'umi';
 import { SurveyObjects } from 'survey-creator';
 import { RootState } from '@/typings';
 import { message } from 'antd';
+import { Question } from 'survey-react';
 
 export interface CreateEditCategoryProps {}
 
 const CreateEditCategory: React.FC<CreateEditCategoryProps> = () => {
-  const [selectedCategory, setSelectedCategory]: [Category | any, any] = useState(null);
+  const [questionData, setQuestionData]: [Question | any, any] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
   const params: { id: string } = useParams();
@@ -41,7 +42,7 @@ const CreateEditCategory: React.FC<CreateEditCategoryProps> = () => {
   }, [saveSuccess]);
 
   const handleSaveSurvey = (survey: SurveyObjects) => {
-    const surveyData = { ...selectedCategory, content: survey };
+    const surveyData = { ...questionData, content: survey };
     if (currentQuestion && currentQuestion._id)
       dispatch({
         type: QUESTIONS_ACTIONS.UPDATE,
@@ -56,8 +57,8 @@ const CreateEditCategory: React.FC<CreateEditCategoryProps> = () => {
 
   return (
     <PageContainer>
-      {selectedCategory && <SurveyCreator saveSurvey={handleSaveSurvey} />}
-      {!selectedCategory && <SelectCategory onSelectedCategory={setSelectedCategory} />}
+      {questionData && <SurveyCreator saveSurvey={handleSaveSurvey} />}
+      {!questionData && <SelectCategory onQuestionDataSave={setQuestionData} />}
     </PageContainer>
   );
 };

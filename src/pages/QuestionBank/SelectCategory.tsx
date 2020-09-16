@@ -4,10 +4,10 @@ import {
   useSelector,
   useDispatch,
   CATEGORIES_ACTIONS,
-  Category,
   useParams,
   QUESTIONS_ACTIONS,
   useHistory,
+  Question,
 } from 'umi';
 import { Card, Form, Select, Button, Space, Row, Col, Divider, Input } from 'antd';
 import { ArrowRightOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons';
@@ -15,7 +15,7 @@ import { ArrowRightOutlined, CloseOutlined, PlusOutlined } from '@ant-design/ico
 import { RootState } from '@/typings';
 
 export interface SelectCategoryProps {
-  onSelectedCategory: Dispatch<SetStateAction<Category | undefined>>;
+  onQuestionDataSave: Dispatch<SetStateAction<Question | undefined>>;
 }
 
 export const SelectCategory = (props: SelectCategoryProps) => {
@@ -42,11 +42,8 @@ export const SelectCategory = (props: SelectCategoryProps) => {
     };
   }, []);
 
-  const handleSubmit = (values: { categoryId: string }) => {
-    const selectedCategory = categories.allCategories.find(
-      ({ _id: id }) => id == values.categoryId,
-    );
-    props.onSelectedCategory(selectedCategory);
+  const handleSubmit = (values: Question) => {
+    props.onQuestionDataSave(values);
   };
 
   const dropdownRender = (menu: React.ReactNode) => (
@@ -74,6 +71,9 @@ export const SelectCategory = (props: SelectCategoryProps) => {
       <Row>
         <Col span={12} offset={6}>
           <Form layout="vertical" size="large" onFinish={handleSubmit}>
+            <Form.Item name="_id" initialValue={questions.currentQuestion?._id} hidden>
+              <Input />
+            </Form.Item>
             <Form.Item
               name="title"
               label="Title"
@@ -82,7 +82,7 @@ export const SelectCategory = (props: SelectCategoryProps) => {
             >
               <Input />
             </Form.Item>
-            <Form.Item label="Category" name="categoryId" rules={[{ required: true }]}>
+            <Form.Item label="Category" name="category" rules={[{ required: true }]}>
               <Select dropdownRender={dropdownRender} placeholder="select category...">
                 {categories.allCategories.map((category) => (
                   <Select.Option key={category._id} value={category._id}>

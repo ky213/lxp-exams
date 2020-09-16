@@ -4,13 +4,14 @@ import { AnyAction } from 'redux';
 import { HTTPError } from '@/typings';
 import { getAll, getById, create, update, remove } from '@/services//QuestionBank/questions';
 import { Category } from '@/models/categories';
+import { SurveyObjects } from 'survey-creator';
 
 export interface Question {
   _id: string;
   title: string;
   description: string;
   category: Category;
-  content: string;
+  content: SurveyObjects;
 }
 
 export interface QuestionState {
