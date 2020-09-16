@@ -72,6 +72,9 @@ export const CreateEditCategory: React.FC<CreateEditCategoryProps> = ({ categori
         <Row>
           <Col span={12} offset={6}>
             <Form layout="vertical" size="large" onFinish={handleSubmit}>
+              <Form.Item name="_id" initialValue={currentCategory?._id} hidden>
+                <Input />
+              </Form.Item>
               <Form.Item
                 name="name"
                 label="Name"

@@ -66,7 +66,13 @@ export const Questions = () => {
 
   return (
     <PageContainer title="Questions">
-      <Table columns={columns} dataSource={allQuestions} showSorterTooltip loading={loading} />
+      <Table
+        columns={columns}
+        dataSource={allQuestions}
+        showSorterTooltip
+        loading={loading}
+        rowKey={'_id'}
+      />
     </PageContainer>
   );
 };

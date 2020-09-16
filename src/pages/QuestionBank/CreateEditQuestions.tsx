@@ -16,7 +16,7 @@ const CreateEditCategory: React.FC<CreateEditCategoryProps> = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const params: { id: string } = useParams();
-  const { currentQuestion, saveSuccess, loading } = useSelector(
+  const { currentQuestion, saveSuccess, loading, error } = useSelector(
     (state: RootState) => state.questions,
   );
 

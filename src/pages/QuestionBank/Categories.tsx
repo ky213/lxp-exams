@@ -61,7 +61,13 @@ export const Categories = () => {
 
   return (
     <PageContainer title="Categories">
-      <Table columns={columns} dataSource={allCategories} showSorterTooltip loading={loading} />
+      <Table
+        columns={columns}
+        dataSource={allCategories}
+        showSorterTooltip
+        loading={loading}
+        rowKey={'_id'}
+      />
     </PageContainer>
   );
 };

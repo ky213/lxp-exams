@@ -37,6 +37,11 @@ export const SelectCategory = (props: SelectCategoryProps) => {
   }, []);
 
   const handleSubmit = (values: Question) => {
+    if (!questions.currentQuestion) {
+      const result = categories.allCategories.find(({ name }) => name == values.category);
+      values.category = result?._id;
+    }
+
     props.onQuestionDataSave(values);
   };
 
@@ -67,6 +72,14 @@ export const SelectCategory = (props: SelectCategoryProps) => {
     </div>
   );
 
+  const defaultCategory = () => {
+    const result = categories.allCategories.find(
+      ({ _id }) => _id == questions.currentQuestion?.category,
+    );
+
+    return result?.name || '';
+  };
+
   return (
     <Card loading={questions.loading}>
       <Row>
@@ -83,11 +96,16 @@ export const SelectCategory = (props: SelectCategoryProps) => {
             >
               <Input />
             </Form.Item>
-            <Form.Item label="Category" name="category" rules={[{ required: true }]}>
+            <Form.Item
+              label="Category"
+              name="category"
+              rules={[{ required: true }]}
+              initialValue={defaultCategory()}
+            >
               <Select dropdownRender={dropdownRender} placeholder="select category...">
-                {categories.allCategories.map((category) => (
-                  <Select.Option key={category._id} value={category._id}>
-                    {category.name}
+                {categories.allCategories.map(({ name }) => (
+                  <Select.Option key={name} value={name}>
+                    {name}
                   </Select.Option>
                 ))}
               </Select>
