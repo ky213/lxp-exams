@@ -1,7 +1,7 @@
 import { Settings as LayoutSettings } from '@ant-design/pro-layout';
 
 export default {
-  navTheme: 'light',
+  navTheme: 'dark',
   primaryColor: '#1890ff',
   layout: 'side',
   contentWidth: 'Fluid',
