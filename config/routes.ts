@@ -53,6 +53,18 @@ export const routes: IRoute[] = [
       },
     ],
   },
+  {
+    path: '/exams',
+    name: 'Exams',
+    icon: 'BulbFilled',
+    routes: [
+      {
+        path: 'exams/list',
+        name: 'List',
+        component: './Exams/Exams',
+      },
+    ],
+  },
   // {
   //   name: 'list.table-list',
   //   icon: 'table',
