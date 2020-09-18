@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 
-import SurveyCreator from './SurveyCreator';
+import SurveyCreator from '@/components/SurveyCreator';
 import SelectCategory from './SelectCategory';
-import { QUESTIONS_ACTIONS, useDispatch, useHistory, useParams, useSelector } from 'umi';
+import { Question, QUESTIONS_ACTIONS, useDispatch, useHistory, useSelector } from 'umi';
 import { SurveyObjects } from 'survey-creator';
 import { RootState } from '@/typings';
 import { message } from 'antd';
-import { Question } from 'survey-react';
 
 export interface CreateEditCategoryProps {}
 
@@ -15,8 +14,7 @@ const CreateEditCategory: React.FC<CreateEditCategoryProps> = () => {
   const [questionData, setQuestionData]: [Question | any, any] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
-  const params: { id: string } = useParams();
-  const { currentQuestion, saveSuccess, loading, error } = useSelector(
+  const { currentQuestion, saveSuccess, loading } = useSelector(
     (state: RootState) => state.questions,
   );
 

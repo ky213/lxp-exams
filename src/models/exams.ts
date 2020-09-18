@@ -23,6 +23,7 @@ export interface Exam extends Survey {
   minPassScore: number;
   showFeedBack: boolean;
   outOfMark: number;
+  creationMode: 'RANDOM' | 'MANUAL';
 }
 
 export interface ExamState {

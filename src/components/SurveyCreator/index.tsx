@@ -45,7 +45,7 @@ const SurveyCreatorComponent: React.FC<SurveyCreatorProps> = ({ saveSurvey }) =>
     <Card>
       <Row justify="end" style={{ marginBottom: '20px' }}>
         <Col span={6} style={{ marginLeft: '5px' }}>
-          <Button size="large" block onClick={() => history.push('/questions/list')}>
+          <Button size="large" block onClick={() => history.goBack()}>
             <CloseOutlined /> Cancel
           </Button>
         </Col>

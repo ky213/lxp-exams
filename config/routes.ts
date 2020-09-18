@@ -63,6 +63,11 @@ export const routes: IRoute[] = [
         name: 'List',
         component: './Exams/Exams',
       },
+      {
+        path: 'exams/edit',
+        name: 'Create',
+        component: './Exams/CreateEditExams',
+      },
     ],
   },
   // {
