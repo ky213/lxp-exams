@@ -14,7 +14,7 @@ export async function create(data: Omit<Question, 'id'>): Promise<any> {
 }
 
 export async function update(data: Partial<Question>): Promise<any> {
-  return axios.put<any>('/api/questionbanks/questions', data);
+  return axios.put<any>('/api/questionbanks/', data);
 }
 
 export async function remove(id: string): Promise<any> {

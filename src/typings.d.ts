@@ -49,4 +49,5 @@ export interface HTTPError {
 export interface RootState {
   questions: QuestionState;
   categories: CategoryState;
+  exams: ExamState;
 }

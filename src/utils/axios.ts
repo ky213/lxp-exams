@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const { REACT_APP_ENV } = process.env;
 const PORT = 4008;
+
 const url = {
   dev: `http://localhost:${PORT}`,
 };
@@ -15,7 +16,5 @@ const instance = axios.create({
     },
   },
 });
-
-instance.interceptors.request.use();
 
 export default instance;

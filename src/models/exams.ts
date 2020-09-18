@@ -2,25 +2,40 @@ import { Effect, Reducer } from 'umi';
 import { AnyAction } from 'redux';
 
 import { HTTPError } from '@/typings';
-import { getAll, getById, create, update, remove } from '@/services/questionbank/categories';
+import { getAll, getById, create, update, remove } from '@/services/questionbank/questions';
+import { Category } from '@/models/categories';
+import { SurveyObjects } from 'survey-creator';
 
-export interface Category {
+export interface Survey {
   _id: string;
   name: string;
   description: string;
+  type: 'EXAM' | 'QUIZ' | 'SURVEY';
+  content: SurveyObjects;
 }
 
-export interface CategoryState {
-  allCategories: Category[];
-  currentCategory: Category | null;
+export interface Exam extends Survey {
+  categories: Category[];
+  timing: number;
+  maxAttemps: number;
+  gradingMethod: 'AVERAGE_ATTEMPT' | 'LAST_ATTEMPT' | 'HIGHEST_ATTEMPT';
+  questionsPerPage: number;
+  minPassScore: number;
+  showFeedBack: boolean;
+  outOfMark: number;
+}
+
+export interface ExamState {
+  allExams: Exam[];
+  currentExam: Exam | null;
   loading: boolean;
   saveSuccess: boolean;
   error: HTTPError | null;
 }
 
-export interface CategoriesModel {
-  namespace: 'categories';
-  state: CategoryState;
+export interface ExamsModel {
+  namespace: 'exams';
+  state: ExamState;
   effects: {
     getAll: Effect;
     getById: Effect;
@@ -30,34 +45,34 @@ export interface CategoriesModel {
     reset: Effect;
   };
   reducers: {
-    saveAll: Reducer<CategoryState, AnyAction>;
-    saveOne: Reducer<CategoryState, AnyAction>;
-    saveUpdate: Reducer<CategoryState, AnyAction>;
-    loading: Reducer<CategoryState, AnyAction>;
-    error: Reducer<CategoryState, AnyAction>;
-    resetState: Reducer<CategoryState, AnyAction>;
+    saveAll: Reducer<ExamState, AnyAction>;
+    saveOne: Reducer<ExamState, AnyAction>;
+    saveUpdate: Reducer<ExamState, AnyAction>;
+    loading: Reducer<ExamState, AnyAction>;
+    error: Reducer<ExamState, AnyAction>;
+    resetState: Reducer<ExamState, AnyAction>;
   };
 }
 
-const initialState: CategoryState = {
-  allCategories: [],
-  currentCategory: null,
+const initialState: ExamState = {
+  allExams: [],
+  currentExam: null,
   loading: false,
   saveSuccess: false,
   error: null,
 };
 
-export enum CATEGORIES_ACTIONS {
-  GET_ALL = 'categories/getAll',
-  GET_BY_ID = 'categories/getById',
-  CREATE = 'categories/create',
-  UPDATE = 'categories/update',
-  DELETE = 'categories/delete',
-  RESET = 'categories/reset',
+export enum EXAMS_ACTIONS {
+  GET_ALL = 'exams/getAll',
+  GET_BY_ID = 'exams/getById',
+  CREATE = 'exams/create',
+  UPDATE = 'exams/update',
+  DELETE = 'exams/delete',
+  RESET = 'exams/reset',
 }
 
-const CategoriesModel: CategoriesModel = {
-  namespace: 'categories',
+const ExamsModel: ExamsModel = {
+  namespace: 'exams',
   state: initialState,
   effects: {
     *getAll(_, { call, put }) {
@@ -118,17 +133,17 @@ const CategoriesModel: CategoriesModel = {
       return {
         ...state,
         loading: false,
-        allCategories: payload,
+        allQuestions: payload,
       };
     },
     saveOne: (state = initialState, { payload }) => {
       return {
         ...state,
         loading: false,
-        currentCategory: payload,
+        currentQuestion: payload,
       };
     },
-    saveUpdate: (state = initialState) => {
+    saveUpdate: (state = initialState, { payload }) => {
       return {
         ...state,
         loading: false,
@@ -147,4 +162,4 @@ const CategoriesModel: CategoriesModel = {
   },
 };
 
-export default CategoriesModel;
+export default ExamsModel;
