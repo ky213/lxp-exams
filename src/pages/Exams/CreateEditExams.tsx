@@ -18,6 +18,7 @@ import { Card, Carousel, message, Steps } from 'antd';
 import ModeSelector from './ModeSelector';
 import ExamSettings from './ExamSettings';
 import TypeSelector from './TypeSelector';
+import CategoriesSelector from './CategoriesSelector';
 
 export interface CreateEditExamProps {}
 
@@ -77,15 +78,17 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
           style={{ marginBottom: '1rem' }}
           onChange={setCurrentStep}
         >
-          <Steps.Step key="type" title="Select type" />
-          <Steps.Step key="mode" title="Select mode" />
+          <Steps.Step key="type" title="Type" />
+          <Steps.Step key="mode" title="Mode" />
+          <Steps.Step key="categories" title="Categories" />
           <Steps.Step key="settings" title="Settings" />
+          <Steps.Step key="creator" title="Creator" />
         </Steps>
         {currentStep === 0 && <TypeSelector onSelectType={handleOnSelectType} />}
         {currentStep === 1 && <ModeSelector onSelectMode={handleOnSelectMode} />}
-        {currentStep === 2 && <ExamSettings />}
-        {/* {mode && mode === 'MANUAL' && <SurveyCreator saveSurvey={handleSaveSurvey} />}
-        {mode && mode === 'RANDOM' && <ExamSettings />} */}
+        {currentStep === 2 && <CategoriesSelector />}
+        {currentStep === 3 && <ExamSettings />}
+        {currentStep === 4 && <SurveyCreator saveSurvey={handleSaveSurvey} />}
       </Card>
     </PageContainer>
   );
