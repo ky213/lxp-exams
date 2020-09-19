@@ -78,7 +78,7 @@ export const layout = ({
       //   history.push('/user/login');
       // }
     },
-    menuHeaderRender: undefined,
+    menuHeaderRender: () => <h1>LXP Exams</h1>,
     ...initialState?.settings,
   };
 };

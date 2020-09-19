@@ -6,11 +6,17 @@ import { getAll, getById, create, update, remove } from '@/services/questionbank
 import { Category } from '@/models/categories';
 import { SurveyObjects } from 'survey-creator';
 
+export type ExamType = 'EXAM' | 'QUIZ' | 'SURVEY';
+
+export type ExamMode = 'RANDOM' | 'MANUAL';
+
+export type ExamGradingMode = 'AVERAGE_ATTEMPT' | 'LAST_ATTEMPT' | 'HIGHEST_ATTEMPT';
+
 export interface Survey {
   _id: string;
   name: string;
   description: string;
-  type: 'EXAM' | 'QUIZ' | 'SURVEY';
+  type: ExamType;
   content: SurveyObjects;
 }
 
@@ -18,12 +24,13 @@ export interface Exam extends Survey {
   categories: Category[];
   timing: number;
   maxAttemps: number;
-  gradingMethod: 'AVERAGE_ATTEMPT' | 'LAST_ATTEMPT' | 'HIGHEST_ATTEMPT';
+  gradingMethod: ExamGradingMode;
+  numberOfQuestions: number;
   questionsPerPage: number;
   minPassScore: number;
   showFeedBack: boolean;
   outOfMark: number;
-  creationMode: 'RANDOM' | 'MANUAL';
+  creationMode: ExamMode;
 }
 
 export interface ExamState {

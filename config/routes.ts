@@ -15,7 +15,7 @@ export const routes: IRoute[] = [
   {
     path: '/questions',
     name: 'Questions',
-    icon: 'QuestionOutlined',
+    icon: 'QuestionCircleFilled',
     routes: [
       {
         path: 'list',

@@ -1,30 +1,31 @@
 import React from 'react';
 import { Card, Col, Row } from 'antd';
 import { DatabaseFilled, EditFilled } from '@ant-design/icons';
+import { ExamMode } from 'umi';
 export interface ModeSelectorProps {
-  onSelectMode: React.Dispatch<React.SetStateAction<'RANDOM' | 'MANUAL'>>;
+  onSelectMode: (mode: ExamMode) => void;
 }
 
 export const ModeSelector: React.FC<ModeSelectorProps> = ({ onSelectMode }) => {
   return (
-    <Card title="Select creation mode">
+    <>
       <Row justify="center" gutter={8}>
         <Col span={8}>
           <Card
             hoverable
-            cover={<DatabaseFilled className="exam-mode-selector" />}
+            cover={<DatabaseFilled className="exam-selector" />}
             onClick={() => onSelectMode('RANDOM')}
           >
             <Card.Meta
               title="Random"
-              description="The system will gerate the exam for ou based on the settings you'll be promted to set next."
+              description="The system will generate the exam for ou based on the settings you'll be promted to set next."
             />
           </Card>
         </Col>
         <Col span={8}>
           <Card
             hoverable
-            cover={<EditFilled className="exam-mode-selector" />}
+            cover={<EditFilled className="exam-selector" />}
             onClick={() => onSelectMode('MANUAL')}
           >
             <Card.Meta
@@ -34,7 +35,7 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({ onSelectMode }) => {
           </Card>
         </Col>
       </Row>
-    </Card>
+    </>
   );
 };
 
