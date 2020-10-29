@@ -35,6 +35,8 @@ export default defineConfig({
   theme: {
     // ...darkTheme,
     'primary-color': defaultSettings.primaryColor,
+    '@layout-header-background': '#293862',
+    '@menu-dark-submenu-bg': '#293862',
   },
   // @ts-ignore
   title: false,

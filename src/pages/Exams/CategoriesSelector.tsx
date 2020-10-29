@@ -83,7 +83,7 @@ const CategoriesSelector = () => {
               Submit
             </Button>
           </Form.Item>
-        </Form>{' '}
+        </Form>
       </Col>
     </Row>
   );
