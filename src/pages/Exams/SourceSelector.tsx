@@ -1,12 +1,13 @@
 import React from 'react';
 import { Card, Col, Row } from 'antd';
 import { DatabaseFilled, EditFilled } from '@ant-design/icons';
-import { ExamMode } from 'umi';
-export interface ModeSelectorProps {
-  onSelectMode: (mode: ExamMode) => void;
+import { ExamSource } from 'umi';
+
+export interface SourceSelectorProps {
+  onSelectSource: (mode: ExamSource) => void;
 }
 
-export const ModeSelector: React.FC<ModeSelectorProps> = ({ onSelectMode }) => {
+const SourceSelector: React.FC<SourceSelectorProps> = ({ onSelectSource }) => {
   return (
     <>
       <Row justify="center" gutter={8}>
@@ -14,11 +15,11 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({ onSelectMode }) => {
           <Card
             hoverable
             cover={<DatabaseFilled className="exam-selector" />}
-            onClick={() => onSelectMode('RANDOM')}
+            onClick={() => onSelectSource('QUESTION_BANK')}
           >
             <Card.Meta
-              title="Random"
-              description="The system will generate the exam based on the settings you'll be promted to set next."
+              title="Question Bank"
+              description="The system will generate the exam from the existing questions saved in the database."
             />
           </Card>
         </Col>
@@ -26,11 +27,11 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({ onSelectMode }) => {
           <Card
             hoverable
             cover={<EditFilled className="exam-selector" />}
-            onClick={() => onSelectMode('MANUAL')}
+            onClick={() => onSelectSource('NO_QUESTION_BANK')}
           >
             <Card.Meta
-              title="Manual"
-              description="You'll use the exam editor to create exams manually"
+              title="Without Question Bank"
+              description="You'll use the exam editor to create an save new questions"
             />
           </Card>
         </Col>
@@ -39,4 +40,4 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({ onSelectMode }) => {
   );
 };
 
-export default ModeSelector;
+export default SourceSelector;

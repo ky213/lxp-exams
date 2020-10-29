@@ -5,31 +5,36 @@ import SurveyCreator from '@/components/SurveyCreator';
 import {
   Exam,
   ExamMode,
+  ExamSource,
   EXAMS_ACTIONS,
   ExamType,
   useDispatch,
   useHistory,
-  useParams,
   useSelector,
 } from 'umi';
 import { SurveyObjects } from 'survey-creator';
 import { RootState } from '@/typings';
-import { Card, Carousel, message, Steps } from 'antd';
-import ModeSelector from './ModeSelector';
-import ExamSettings from './ExamSettings';
-import TypeSelector from './TypeSelector';
-import CategoriesSelector from './CategoriesSelector';
+import { Card, message, Steps } from 'antd';
+import {
+  ExamSettings,
+  CategoriesSelector,
+  ModeSelector,
+  TypeSelector,
+  SourceSelector,
+} from './index';
 
 export interface CreateEditExamProps {}
 
 const CreateEditExam: React.FC<CreateEditExamProps> = () => {
   const [examData, setExamData]: [Exam | any, any] = useState(null);
   const [mode, setMode]: [ExamMode | null, any] = useState(null);
+  const [source, setSource]: [ExamSource | null, any] = useState(null);
   const [type, setType]: [ExamType | null, any] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const dispatch = useDispatch();
   const history = useHistory();
   const { currentExam, saveSuccess, loading } = useSelector((state: RootState) => state.exams);
+
   useEffect(() => {
     return () => {
       dispatch({
@@ -47,6 +52,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
 
   const handleSaveSurvey = (survey: SurveyObjects) => {
     const surveyData = { ...examData, content: survey };
+
     if (currentExam && currentExam._id)
       dispatch({
         type: EXAMS_ACTIONS.UPDATE,
@@ -59,14 +65,19 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
       });
   };
 
-  const handleOnSelectType = (type: ExamType) => {
-    setType(type);
+  const handleOnSelectSource = (exanmSource: ExamSource) => {
+    setType(exanmSource);
+    setCurrentStep(2);
+  };
+
+  const handleOnSelectType = (examType: ExamType) => {
+    setType(examType);
     setCurrentStep(1);
   };
 
-  const handleOnSelectMode = (mode: ExamMode) => {
-    setType(mode);
-    setCurrentStep(2);
+  const handleOnSelectMode = (examMode: ExamMode) => {
+    setMode(examMode);
+    setCurrentStep(3);
   };
 
   return (
@@ -79,16 +90,18 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
           onChange={setCurrentStep}
         >
           <Steps.Step key="type" title="Type" />
+          <Steps.Step key="source" title="Source" />
           <Steps.Step key="mode" title="Mode" />
           <Steps.Step key="categories" title="Categories" />
           <Steps.Step key="settings" title="Settings" />
           <Steps.Step key="creator" title="Creator" />
         </Steps>
         {currentStep === 0 && <TypeSelector onSelectType={handleOnSelectType} />}
-        {currentStep === 1 && <ModeSelector onSelectMode={handleOnSelectMode} />}
-        {currentStep === 2 && <CategoriesSelector />}
-        {currentStep === 3 && <ExamSettings />}
-        {currentStep === 4 && <SurveyCreator saveSurvey={handleSaveSurvey} />}
+        {currentStep === 1 && <SourceSelector onSelectSource={handleOnSelectSource} />}
+        {currentStep === 2 && <ModeSelector onSelectMode={handleOnSelectMode} />}
+        {currentStep === 3 && <CategoriesSelector />}
+        {currentStep === 4 && <ExamSettings />}
+        {currentStep === 5 && <SurveyCreator saveSurvey={handleSaveSurvey} />}
       </Card>
     </PageContainer>
   );

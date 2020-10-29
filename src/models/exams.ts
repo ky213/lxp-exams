@@ -8,6 +8,8 @@ import { SurveyObjects } from 'survey-creator';
 
 export type ExamType = 'EXAM' | 'QUIZ' | 'SURVEY';
 
+export type ExamSource = 'QUESTION_BANK' | 'NO_QUESTION_BANK';
+
 export type ExamMode = 'RANDOM' | 'MANUAL';
 
 export type ExamGradingMode = 'AVERAGE_ATTEMPT' | 'LAST_ATTEMPT' | 'HIGHEST_ATTEMPT';
