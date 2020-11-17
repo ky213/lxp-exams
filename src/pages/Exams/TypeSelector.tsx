@@ -26,7 +26,7 @@ export const TypeSelector: React.FC<TypeSelectorProps> = ({ onSelectType }) => {
           >
             <Card.Meta
               title="Exam"
-              description="Create an exam to assess learner bases on questions stored on the database."
+              description="Create an exam based on questions stored in the database."
             />
           </Card>
         </Col>
@@ -39,7 +39,7 @@ export const TypeSelector: React.FC<TypeSelectorProps> = ({ onSelectType }) => {
           >
             <Card.Meta
               title="Quiz"
-              description="Create a quiz to assess learner bases on questions stored on the database."
+              description="Create a quiz based on questions stored in the database."
             />
           </Card>
         </Col>

@@ -31,7 +31,7 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ onSelectSource }) => {
           >
             <Card.Meta
               title="Without Question Bank"
-              description="You'll use the exam editor to create an save new questions"
+              description="You'll use the exam editor to create and save new questions"
             />
           </Card>
         </Col>

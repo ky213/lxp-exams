@@ -65,9 +65,11 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
       });
   };
 
-  const handleOnSelectSource = (exanmSource: ExamSource) => {
-    setType(exanmSource);
-    setCurrentStep(2);
+  const handleOnSelectSource = (examSource: ExamSource) => {
+    const step = examSource === 'QUESTION_BANK' ? 2 : 5;
+
+    setSource(examSource);
+    setCurrentStep(step);
   };
 
   const handleOnSelectType = (examType: ExamType) => {
@@ -93,8 +95,8 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
           <Steps.Step key="source" title="Source" />
           <Steps.Step key="mode" title="Mode" />
           <Steps.Step key="categories" title="Categories" />
-          <Steps.Step key="settings" title="Settings" />
-          <Steps.Step key="creator" title="Creator" />
+          <Steps.Step key="settings" title="Settings" disabled={source === 'QUESTION_BANK'} />
+          <Steps.Step key="creator" title="Creator" disabled={source === 'QUESTION_BANK'} />
         </Steps>
         {currentStep === 0 && <TypeSelector onSelectType={handleOnSelectType} />}
         {currentStep === 1 && <SourceSelector onSelectSource={handleOnSelectSource} />}

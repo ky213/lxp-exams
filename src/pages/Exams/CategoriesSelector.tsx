@@ -4,9 +4,12 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { RootState } from '@/typings';
 import { CATEGORIES_ACTIONS, useDispatch, useSelector } from 'umi';
 
-const CategoriesSelector = () => {
+export interface CategoriesSelectorProps {}
+
+const CategoriesSelector: React.FC<CategoriesSelectorProps> = () => {
   const { allCategories } = useSelector((state: RootState) => state.categories);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch({
       type: CATEGORIES_ACTIONS.GET_ALL,
@@ -20,7 +23,7 @@ const CategoriesSelector = () => {
   return (
     <Row justify="center">
       <Col span={12}>
-        <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
+        <Form name="categories" onFinish={onFinish} autoComplete="off">
           <Form.List name="categories">
             {(fields, { add, remove }) => {
               return (
@@ -36,6 +39,7 @@ const CategoriesSelector = () => {
                         name={[field.name, 'category']}
                         fieldKey={[field.fieldKey, 'category']}
                         rules={[{ required: true }]}
+                        style={{ width: '330px' }}
                       >
                         <Select placeholder="select category...">
                           {allCategories.map(({ name }) => (
@@ -63,13 +67,7 @@ const CategoriesSelector = () => {
                   ))}
 
                   <Form.Item>
-                    <Button
-                      type="dashed"
-                      onClick={() => {
-                        add();
-                      }}
-                      block
-                    >
+                    <Button type="dashed" onClick={add} block>
                       <PlusOutlined /> Add category
                     </Button>
                   </Form.Item>

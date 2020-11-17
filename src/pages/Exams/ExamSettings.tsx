@@ -14,7 +14,9 @@ import {
 } from 'antd';
 import { useHistory } from 'umi';
 
-export const ExamSettings = () => {
+export interface ExamSettingsProps {}
+
+export const ExamSettings: React.FC<ExamSettingsProps> = () => {
   const history = useHistory();
   return (
     <Row justify="center">
