@@ -5,10 +5,14 @@ import { RootState } from '@/typings';
 import { CATEGORIES_ACTIONS, Category, useDispatch, useSelector } from 'umi';
 
 export interface CategoriesSelectorProps {
+  selectedCategories: Category[];
   onSelectCategories: (categories: Category[]) => void;
 }
 
-const CategoriesSelector: React.FC<CategoriesSelectorProps> = ({ onSelectCategories }) => {
+const CategoriesSelector: React.FC<CategoriesSelectorProps> = ({
+  selectedCategories,
+  onSelectCategories,
+}) => {
   const { allCategories } = useSelector((state: RootState) => state.categories);
   const dispatch = useDispatch();
 
