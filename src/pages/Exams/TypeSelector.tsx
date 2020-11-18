@@ -10,7 +10,7 @@ import {
 import { ExamType } from 'umi';
 
 export interface TypeSelectorProps {
-  onSelectType: (typ: ExamType) => void;
+  onSelectType: (type: ExamType) => void;
 }
 
 export const TypeSelector: React.FC<TypeSelectorProps> = ({ onSelectType }) => {

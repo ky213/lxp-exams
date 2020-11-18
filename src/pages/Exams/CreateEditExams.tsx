@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-
-import SurveyCreator from '@/components/SurveyCreator';
+import { Button, Card, message, Result, Steps } from 'antd';
+import { SurveyObjects } from 'survey-creator';
 import {
+  Category,
   Exam,
   ExamMode,
   ExamSource,
   EXAMS_ACTIONS,
   ExamType,
+  Link,
   useDispatch,
   useHistory,
   useSelector,
 } from 'umi';
-import { SurveyObjects } from 'survey-creator';
+
+import SurveyCreator from '@/components/SurveyCreator';
 import { RootState } from '@/typings';
-import { Card, message, Steps } from 'antd';
 import {
   ExamSettings,
   CategoriesSelector,
@@ -30,6 +32,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
   const [mode, setMode]: [ExamMode | null, any] = useState(null);
   const [source, setSource]: [ExamSource | null, any] = useState(null);
   const [type, setType]: [ExamType | null, any] = useState(null);
+  const [categories, setCategories]: [Category[] | null, any] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -82,6 +85,11 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
     setCurrentStep(3);
   };
 
+  const handleOnSelectCategories = (categories: Category[]) => {
+    setCategories(categories);
+    setCurrentStep(5);
+  };
+
   return (
     <PageContainer title="Creat/Edit Exams">
       <Card>
@@ -101,9 +109,11 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
         {currentStep === 0 && <TypeSelector onSelectType={handleOnSelectType} />}
         {currentStep === 1 && <SourceSelector onSelectSource={handleOnSelectSource} />}
         {currentStep === 2 && <ModeSelector onSelectMode={handleOnSelectMode} />}
-        {currentStep === 3 && <CategoriesSelector />}
+        {currentStep === 3 && <CategoriesSelector onSelectCategories={handleOnSelectCategories} />}
         {currentStep === 4 && <ExamSettings />}
-        {currentStep === 5 && <SurveyCreator saveSurvey={handleSaveSurvey} />}
+        {currentStep === 5 && (
+          <SurveyCreator saveSurvey={handleSaveSurvey} mode={mode} source={source} />
+        )}
       </Card>
     </PageContainer>
   );

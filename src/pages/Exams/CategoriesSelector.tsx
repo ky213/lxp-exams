@@ -2,11 +2,13 @@ import React, { useEffect } from 'react';
 import { Form, Input, Button, Space, Row, Col, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { RootState } from '@/typings';
-import { CATEGORIES_ACTIONS, useDispatch, useSelector } from 'umi';
+import { CATEGORIES_ACTIONS, Category, useDispatch, useSelector } from 'umi';
 
-export interface CategoriesSelectorProps {}
+export interface CategoriesSelectorProps {
+  onSelectCategories: (categories: Category[]) => void;
+}
 
-const CategoriesSelector: React.FC<CategoriesSelectorProps> = () => {
+const CategoriesSelector: React.FC<CategoriesSelectorProps> = ({ onSelectCategories }) => {
   const { allCategories } = useSelector((state: RootState) => state.categories);
   const dispatch = useDispatch();
 
@@ -17,7 +19,16 @@ const CategoriesSelector: React.FC<CategoriesSelectorProps> = () => {
   }, []);
 
   const onFinish = (values: any) => {
-    console.log('Received values of form:', values);
+    const categories = allCategories.filter((category) => {
+      for (const el of values.categories) {
+        if (el.category === category.name) {
+          category.weight = +el.weight;
+          return category;
+        }
+      }
+    });
+
+    onSelectCategories(categories);
   };
 
   return (

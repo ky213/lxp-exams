@@ -8,6 +8,7 @@ export interface Category {
   _id: string;
   name: string;
   description: string;
+  weight?: number;
 }
 
 export interface CategoryState {
