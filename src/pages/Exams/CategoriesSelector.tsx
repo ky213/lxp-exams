@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button, Space, Row, Col, Select } from 'antd';
+import { Form, Input, Button, Space, Row, Col, Select, message } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { RootState } from '@/typings';
 import { CATEGORIES_ACTIONS, Category, useDispatch, useSelector } from 'umi';
@@ -19,6 +19,8 @@ const CategoriesSelector: React.FC<CategoriesSelectorProps> = ({ onSelectCategor
   }, []);
 
   const onFinish = (values: any) => {
+    if (!values.categories) message.error('Please add at least one category');
+
     const categories = allCategories.filter((category) => {
       for (const el of values.categories) {
         if (el.category === category.name) {

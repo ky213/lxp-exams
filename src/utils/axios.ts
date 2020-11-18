@@ -9,6 +9,7 @@ const url = {
 
 const instance = axios.create({
   baseURL: url[REACT_APP_ENV || 'dev'],
+  timeout: 1000 * 60,
   headers: {
     common: {
       Authorization:

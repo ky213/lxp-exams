@@ -9,6 +9,7 @@ import {
   ExamSource,
   EXAMS_ACTIONS,
   ExamType,
+  Question,
   Link,
   useDispatch,
   useHistory,
@@ -23,6 +24,7 @@ import {
   ModeSelector,
   TypeSelector,
   SourceSelector,
+  QuestionsSelector,
 } from './index';
 
 export interface CreateEditExamProps {}
@@ -87,8 +89,10 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
 
   const handleOnSelectCategories = (selectedCategories: Category[]) => {
     setCategories(selectedCategories);
-    setCurrentStep(5);
+    setCurrentStep(4);
   };
+
+  const handleOnSelectQuestions = (selectedQuestions: Question[]) => {};
 
   return (
     <PageContainer title="Creat/Edit Exams">
@@ -103,6 +107,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
           <Steps.Step key="source" title="Source" />
           <Steps.Step key="mode" title="Mode" />
           <Steps.Step key="categories" title="Categories" />
+          <Steps.Step key="questions" title="Questions" />
           <Steps.Step key="settings" title="Settings" disabled={source === 'QUESTION_BANK'} />
           <Steps.Step key="creator" title="Creator" disabled={source === 'QUESTION_BANK'} />
         </Steps>
@@ -110,8 +115,9 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
         {currentStep === 1 && <SourceSelector onSelectSource={handleOnSelectSource} />}
         {currentStep === 2 && <ModeSelector onSelectMode={handleOnSelectMode} />}
         {currentStep === 3 && <CategoriesSelector onSelectCategories={handleOnSelectCategories} />}
-        {currentStep === 4 && <ExamSettings />}
-        {currentStep === 5 && (
+        {currentStep === 4 && <QuestionsSelector onSelectQuestions={handleOnSelectQuestions} />}
+        {currentStep === 5 && <ExamSettings />}
+        {currentStep === 6 && (
           <SurveyCreator saveSurvey={handleSaveSurvey} mode={mode} source={source} />
         )}
       </Card>

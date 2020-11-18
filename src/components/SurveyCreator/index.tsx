@@ -57,7 +57,7 @@ const SurveyCreatorComponent: React.FC<SurveyCreatorProps> = ({ saveSurvey, mode
         <Result
           status="success"
           title="Successfully created exam"
-          subTitle="The exam question will be generated on runtime"
+          subTitle="The exam questions will be generated on runtime"
           extra={[<Link to="/exams/exams/list">Go Back</Link>]}
         />
       ) : (
