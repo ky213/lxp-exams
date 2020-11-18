@@ -10,7 +10,7 @@ export async function getById(id: string): Promise<any> {
 }
 
 export async function create(data: Omit<Exam, 'id'>): Promise<any> {
-  return axios.post<any>('/api/exams', data);
+  return axios.post<any>('/api/questionbanks/exams', data);
 }
 
 export async function update(data: Partial<Exam>): Promise<any> {

@@ -2,7 +2,7 @@ import { Effect, Reducer } from 'umi';
 import { AnyAction } from 'redux';
 
 import { HTTPError } from '@/typings';
-import { getAll, getById, create, update, remove } from '@/services/questionbank/questions';
+import { getAll, getById, create, update, remove } from '@/services/exams';
 import { Category } from '@/models/categories';
 import { SurveyObjects } from 'survey-creator';
 

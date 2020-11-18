@@ -33,19 +33,6 @@ export const TypeSelector: React.FC<TypeSelectorProps> = ({ onSelectType }) => {
         <Col span={8}>
           <Card
             hoverable
-            cover={<QuestionCircleFilled className="exam-selector" />}
-            onClick={() => onSelectType('QUIZ')}
-            style={{ height: '100%' }}
-          >
-            <Card.Meta
-              title="Quiz"
-              description="Create a quiz based on questions stored in the database."
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card
-            hoverable
             cover={<ProfileFilled className="exam-selector" />}
             onClick={() => onSelectType('SURVEY')}
             style={{ height: '100%' }}

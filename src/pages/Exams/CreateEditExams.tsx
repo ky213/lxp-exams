@@ -85,8 +85,8 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
     setCurrentStep(3);
   };
 
-  const handleOnSelectCategories = (categories: Category[]) => {
-    setCategories(categories);
+  const handleOnSelectCategories = (selectedCategories: Category[]) => {
+    setCategories(selectedCategories);
     setCurrentStep(5);
   };
 
