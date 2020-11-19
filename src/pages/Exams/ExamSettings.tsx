@@ -1,28 +1,24 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  message,
-  Radio,
-  Row,
-  Select,
-  Space,
-  Steps,
-  TimePicker,
-} from 'antd';
-import { useHistory } from 'umi';
+import { Button, Col, Form, Input, Radio, Row, Select, Space } from 'antd';
+import { useHistory, Settings, useSelector } from 'umi';
+import { RootState } from '@/typings';
+export interface ExamSettingsProps {
+  onSaveExamSettings: (settings: Settings) => void;
+}
 
-export interface ExamSettingsProps {}
-
-export const ExamSettings: React.FC<ExamSettingsProps> = () => {
+const ExamSettings: React.FC<ExamSettingsProps> = ({ onSaveExamSettings }) => {
+  const { loading } = useSelector((state: RootState) => state.exams);
   const history = useHistory();
+
+  const handleOnFinish = (values: Settings) => {
+    onSaveExamSettings(values);
+  };
+
   return (
     <Row justify="center">
       <Col span={12}>
-        <Form layout="vertical" size="large">
-          <Form.Item name="'_id" hidden={true}>
+        <Form layout="vertical" size="large" onFinish={handleOnFinish}>
+          <Form.Item name="_id" hidden={true}>
             <Input />
           </Form.Item>
           <Form.Item name="name" label="Name" rules={[{ required: true }]}>
@@ -72,7 +68,7 @@ export const ExamSettings: React.FC<ExamSettingsProps> = () => {
           </Form.Item>
           <Form.Item>
             <Space>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" loading={loading}>
                 Save
               </Button>
               <Button onClick={() => history.goBack()}>Cancel</Button>

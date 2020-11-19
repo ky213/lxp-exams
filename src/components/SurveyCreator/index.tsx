@@ -48,7 +48,7 @@ const SurveyCreatorComponent: React.FC<SurveyCreatorProps> = ({ saveSurvey, mode
 
     surveyCreator = new SurveyCreator('creatorElement', options);
 
-    if (currentQuestion && currentQuestion.content) surveyCreator.JSON = currentQuestion.content;
+    if (currentQuestion?.content) surveyCreator.JSON = currentQuestion.content;
   };
 
   return (

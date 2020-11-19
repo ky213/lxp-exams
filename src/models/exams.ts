@@ -14,16 +14,9 @@ export type ExamMode = 'RANDOM' | 'MANUAL';
 
 export type ExamGradingMode = 'AVERAGE_ATTEMPT' | 'LAST_ATTEMPT' | 'HIGHEST_ATTEMPT';
 
-export interface Survey {
-  _id: string;
+export type Settings = {
   name: string;
   description: string;
-  type: ExamType;
-  content: SurveyObjects;
-}
-
-export interface Exam extends Survey {
-  categories: Category[];
   timing: number;
   maxAttemps: number;
   gradingMethod: ExamGradingMode;
@@ -32,7 +25,16 @@ export interface Exam extends Survey {
   minPassScore: number;
   showFeedBack: boolean;
   outOfMark: number;
-  creationMode: ExamMode;
+};
+
+export interface Exam {
+  _id?: string;
+  settings: Settings;
+  categories: Category[];
+  mode: ExamMode;
+  source: ExamSource;
+  type: ExamType;
+  content: SurveyObjects;
 }
 
 export interface ExamState {

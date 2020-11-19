@@ -1,5 +1,6 @@
 import { CategoryState } from './models/categories';
 import { QuestionState } from './models/questions';
+import { ExamState } from './models/exams';
 
 declare module 'slash2';
 declare module '*.css';

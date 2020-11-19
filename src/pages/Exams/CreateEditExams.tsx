@@ -10,6 +10,7 @@ import {
   EXAMS_ACTIONS,
   ExamType,
   Question,
+  Settings,
   Link,
   useDispatch,
   useHistory,
@@ -30,15 +31,17 @@ import {
 export interface CreateEditExamProps {}
 
 const CreateEditExam: React.FC<CreateEditExamProps> = () => {
-  const [examData, setExamData]: [Exam | any, any] = useState(null);
   const [mode, setMode]: [ExamMode | null, any] = useState(null);
   const [source, setSource]: [ExamSource | null, any] = useState(null);
   const [type, setType]: [ExamType | null, any] = useState(null);
   const [categories, setSelectedCategories]: [Category[], any] = useState([]);
+  const [settings, setSettings]: [Settings | null, any] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const dispatch = useDispatch();
   const history = useHistory();
-  const { currentExam, saveSuccess, loading } = useSelector((state: RootState) => state.exams);
+  const { currentExam, saveSuccess, loading, error } = useSelector(
+    (state: RootState) => state.exams,
+  );
 
   useEffect(() => {
     return () => {
@@ -51,14 +54,20 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
   useEffect(() => {
     if (!loading && saveSuccess) {
       message.success('Exams saved successfully');
-      history.push('/exams/list');
+      history.push('/exams/exams/list');
     }
-  }, [saveSuccess]);
 
-  const handleSaveSurvey = (survey: SurveyObjects) => {
-    const surveyData = { ...examData, content: survey };
+    if (!loading && error) {
+      message.error(`Error: ${error.message}`);
+    }
 
-    if (currentExam && currentExam._id)
+    if (settings) handleSaveSurvey(null);
+  }, [saveSuccess, settings]);
+
+  const handleSaveSurvey = (survey: SurveyObjects | null) => {
+    const surveyData = { type, source, mode, categories, settings, content: survey };
+
+    if (currentExam?._id)
       dispatch({
         type: EXAMS_ACTIONS.UPDATE,
         payload: surveyData,
@@ -89,11 +98,16 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
 
   const handleOnSelectCategories = (selectedCategories: Category[]) => {
     const step = mode === 'RANDOM' ? 5 : 4;
-    // setSelectedCategories(selectedCategories);
+
+    setSelectedCategories(selectedCategories);
     setCurrentStep(step);
   };
 
   const handleOnSelectQuestions = (selectedQuestions: Question[]) => {};
+
+  const handleOnSaveExamSettings = (values: Settings) => {
+    setSettings(values);
+  };
 
   let activeSteps: string = '0';
 
@@ -128,7 +142,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
           />
         )}
         {currentStep === 4 && <QuestionsSelector onSelectQuestions={handleOnSelectQuestions} />}
-        {currentStep === 5 && <ExamSettings />}
+        {currentStep === 5 && <ExamSettings onSaveExamSettings={handleOnSaveExamSettings} />}
         {currentStep === 6 && (
           <SurveyCreator saveSurvey={handleSaveSurvey} mode={mode} source={source} />
         )}
