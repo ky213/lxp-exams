@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Question } from 'umi';
 
 export interface QuestionsSelectorProps {
-  onSelectQuestions: (selectedQuestions: Question[]) => void;
+  onSelectQuestions: (selectedQuestions: Question[] | null) => void;
 }
 
 const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ onSelectQuestions }) => {
@@ -46,7 +46,12 @@ const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ onSelectQuestions
           <span style={{ marginRight: 8 }}>
             {hasSelected ? `Selected ${selectedRows.length} items` : ''}
           </span>
-          <Button type="primary" onClick={() => {}} disabled={!hasSelected} block>
+          <Button
+            type="primary"
+            onClick={() => onSelectQuestions(null)}
+            disabled={!hasSelected}
+            block
+          >
             Submit
           </Button>
         </Col>

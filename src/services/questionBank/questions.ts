@@ -9,6 +9,10 @@ export async function getById(id: string): Promise<any> {
   return axios.get<Question>(`/api/questionbanks/questions/${id}`);
 }
 
+export async function getQuesionsByCategories(categories: string[]): Promise<any> {
+  return axios.post<Question[]>(`/api/questionbanks/questions/categories/all`);
+}
+
 export async function create(data: Omit<Question, 'id'>): Promise<any> {
   return axios.post<any>('/api/questionbanks/questions', data);
 }

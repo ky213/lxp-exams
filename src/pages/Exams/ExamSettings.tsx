@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Col, Form, Input, Radio, Row, Select, Space } from 'antd';
-import { useHistory, Settings, useSelector } from 'umi';
+import { useHistory, Settings, useSelector, useDispatch, EXAMS_ACTIONS } from 'umi';
 import { RootState } from '@/typings';
 export interface ExamSettingsProps {
   onSaveExamSettings: (settings: Settings) => void;
@@ -8,7 +8,16 @@ export interface ExamSettingsProps {
 
 const ExamSettings: React.FC<ExamSettingsProps> = ({ onSaveExamSettings }) => {
   const { loading } = useSelector((state: RootState) => state.exams);
+  const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: EXAMS_ACTIONS.RESET,
+      });
+    };
+  }, []);
 
   const handleOnFinish = (values: Settings) => {
     onSaveExamSettings(values);
@@ -21,13 +30,13 @@ const ExamSettings: React.FC<ExamSettingsProps> = ({ onSaveExamSettings }) => {
           <Form.Item name="_id" hidden={true}>
             <Input />
           </Form.Item>
-          <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+          <Form.Item name="name" label="Title" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
           <Form.Item name="description" label="Description" rules={[{ required: true }]}>
             <Input.TextArea rows={4} />
           </Form.Item>
-          <Form.Item name="timing" label="Timing" rules={[{ required: true }]}>
+          <Form.Item name="maxTimeToFinish" label="Timing (seconds)" rules={[{ required: true }]}>
             <Input type="number" />
           </Form.Item>
           <Form.Item name="maxAttempts" label="Max Attempts" rules={[{ required: true }]}>

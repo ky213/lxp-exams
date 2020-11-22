@@ -17,7 +17,7 @@ export type ExamGradingMode = 'AVERAGE_ATTEMPT' | 'LAST_ATTEMPT' | 'HIGHEST_ATTE
 export type Settings = {
   name: string;
   description: string;
-  timing: number;
+  maxTimeToFinish: number;
   maxAttemps: number;
   gradingMethod: ExamGradingMode;
   numberOfQuestions: number;
@@ -145,7 +145,7 @@ const ExamsModel: ExamsModel = {
       return {
         ...state,
         loading: false,
-        allQuestions: payload,
+        allExams: payload,
       };
     },
     saveOne: (state = initialState, { payload }) => {
@@ -169,7 +169,7 @@ const ExamsModel: ExamsModel = {
       return { ...state, loading: false, saveSuccess: false, error: payload };
     },
     resetState: (state = initialState) => {
-      return { ...initialState };
+      return initialState;
     },
   },
 };

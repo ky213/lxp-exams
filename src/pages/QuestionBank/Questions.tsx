@@ -38,8 +38,10 @@ export const Questions = () => {
     },
     {
       title: 'Category',
-      dataIndex: 'category',
       key: 'category',
+      render(_text: string, record: Question) {
+        return record.category.name;
+      },
     },
     {
       title: 'Action',

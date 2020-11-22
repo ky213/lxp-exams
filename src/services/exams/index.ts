@@ -2,7 +2,7 @@ import axios from '@/utils/axios';
 import { Exam } from '@/models/exams';
 
 export async function getAll(): Promise<any> {
-  return axios.get<Exam[]>('/api/exams');
+  return axios.get<Exam[]>('/api/questionbanks/exams');
 }
 
 export async function getById(id: string): Promise<any> {
@@ -18,5 +18,5 @@ export async function update(data: Partial<Exam>): Promise<any> {
 }
 
 export async function remove(id: string): Promise<any> {
-  return axios.delete<any>(`/api/exams/${id}`);
+  return axios.delete<any>(`/api/questionbanks/exams/${id}`);
 }

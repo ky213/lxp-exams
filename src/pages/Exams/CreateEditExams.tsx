@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Card, message, Result, Steps } from 'antd';
+import { Card, message, Steps } from 'antd';
 import { SurveyObjects } from 'survey-creator';
 import {
   Category,
-  Exam,
   ExamMode,
   ExamSource,
   EXAMS_ACTIONS,
   ExamType,
   Question,
   Settings,
-  Link,
   useDispatch,
   useHistory,
   useSelector,
@@ -65,7 +63,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
   }, [saveSuccess, settings]);
 
   const handleSaveSurvey = (survey: SurveyObjects | null) => {
-    const surveyData = { type, source, mode, categories, settings, content: survey };
+    const surveyData = { type, source, mode: mode || 'NONE', categories, settings, content: survey };
 
     if (currentExam?._id)
       dispatch({
@@ -103,7 +101,9 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
     setCurrentStep(step);
   };
 
-  const handleOnSelectQuestions = (selectedQuestions: Question[]) => {};
+  const handleOnSelectQuestions = (selectedQuestions: Question[] | null) => {
+    setCurrentStep(5);
+  };
 
   const handleOnSaveExamSettings = (values: Settings) => {
     setSettings(values);

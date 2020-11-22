@@ -28,22 +28,26 @@ export const Exams = () => {
   const columns = [
     {
       title: 'Title',
-      dataIndex: 'title',
       key: 'title',
+      render(_text: string, record: Exam) {
+        return record.settings.name || record.content?.title;
+      },
     },
     {
       title: 'Desciption',
-      dataIndex: 'description',
       key: 'description',
+      render(_text: string, record: Exam) {
+        return record.settings.description || record.content?.description;
+      },
     },
     {
       title: 'Action',
       key: 'action',
       render: (_text: string, record: Exam) => (
         <Space size="middle">
-          <Link to={`edit/${record._id}`}>
+          {/* <Link to={`edit/${record._id}`}>
             <EditFilled /> Edit
-          </Link>
+          </Link> */}
           <Popconfirm
             title="Are you sure to delete this exam?"
             onConfirm={() => handleDelete(record)}
