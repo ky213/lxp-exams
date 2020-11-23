@@ -2,16 +2,22 @@ import { Effect, Reducer } from 'umi';
 import { AnyAction } from 'redux';
 
 import { HTTPError } from '@/typings';
-import { getAll, getById, create, update, remove } from '@/services/questionbank/questions';
+import {
+  getAll,
+  getById,
+  getQuesionsByCategories,
+  create,
+  update,
+  remove,
+} from '@/services/questionbank/questions';
 import { Category } from '@/models/categories';
-import { SurveyObjects } from 'survey-creator';
-
+import { ISurvey } from 'survey-react';
 export interface Question {
   _id: string;
   title: string;
   description: string;
   category: Category;
-  content: SurveyObjects;
+  content: ISurvey;
 }
 
 export interface QuestionState {
@@ -28,6 +34,7 @@ export interface QuestionsModel {
   effects: {
     getAll: Effect;
     getById: Effect;
+    getByCategories: Effect;
     create: Effect;
     update: Effect;
     delete: Effect;
@@ -54,6 +61,7 @@ const initialState: QuestionState = {
 export enum QUESTIONS_ACTIONS {
   GET_ALL = 'questions/getAll',
   GET_BY_ID = 'questions/getById',
+  GET_BY_CATEGORIES = 'questions/getByCategories',
   CREATE = 'questions/create',
   UPDATE = 'questions/update',
   DELETE = 'questions/delete',
@@ -78,6 +86,15 @@ const QuestionsModel: QuestionsModel = {
         yield put({ type: 'loading' });
         const { data } = yield call(getById, action.payload);
         yield put({ type: 'saveOne', payload: data });
+      } catch (error) {
+        yield put({ type: 'error', payload: error });
+      }
+    },
+    *getByCategories(action, { call, put }) {
+      try {
+        yield put({ type: 'loading' });
+        const { data } = yield call(getQuesionsByCategories, action.payload);
+        yield put({ type: 'saveAll', payload: data });
       } catch (error) {
         yield put({ type: 'error', payload: error });
       }

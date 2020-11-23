@@ -141,7 +141,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
             onSelectCategories={handleOnSelectCategories}
           />
         )}
-        {currentStep === 4 && <QuestionsSelector onSelectQuestions={handleOnSelectQuestions} />}
+        {currentStep === 4 && <QuestionsSelector categories={categories} onSelectQuestions={handleOnSelectQuestions} />}
         {currentStep === 5 && <ExamSettings onSaveExamSettings={handleOnSaveExamSettings} />}
         {currentStep === 6 && (
           <SurveyCreator saveSurvey={handleSaveSurvey} mode={mode} source={source} />

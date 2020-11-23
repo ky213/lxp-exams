@@ -40,7 +40,7 @@ export const Questions = () => {
       title: 'Category',
       key: 'category',
       render(_text: string, record: Question) {
-        return record.category.name;
+        return record.category?.name;
       },
     },
     {

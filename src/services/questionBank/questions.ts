@@ -1,16 +1,19 @@
 import axios from '@/utils/axios';
 import { Question } from '@/models/questions';
+import { AxiosResponse } from 'axios';
 
-export async function getAll(): Promise<any> {
+export async function getAll(): Promise<AxiosResponse<Question[]>> {
   return axios.get<Question[]>('/api/questionbanks/questions');
 }
 
-export async function getById(id: string): Promise<any> {
+export async function getById(id: string): Promise<AxiosResponse<Question>> {
   return axios.get<Question>(`/api/questionbanks/questions/${id}`);
 }
 
-export async function getQuesionsByCategories(categories: string[]): Promise<any> {
-  return axios.post<Question[]>(`/api/questionbanks/questions/categories/all`);
+export async function getQuesionsByCategories(
+  categories: string[],
+): Promise<AxiosResponse<Question[]>> {
+  return axios.post<Question[]>(`/api/questionbanks/questions/categories/content/all`, categories);
 }
 
 export async function create(data: Omit<Question, 'id'>): Promise<any> {
