@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button, Card, Col, Result, Row } from 'antd';
-import { SurveyCreator, StylesManager, SurveyObjects } from 'survey-creator';
+import { SurveyCreator, StylesManager } from 'survey-creator';
 import { CloseOutlined, UploadOutlined } from '@ant-design/icons';
 import { RootState } from '@/typings';
 import {
@@ -12,9 +12,10 @@ import {
   useHistory,
   useSelector,
 } from 'umi';
+import { ISurvey } from 'survey-react';
 
 export interface SurveyCreatorProps {
-  saveSurvey: (survey: SurveyObjects) => void;
+  saveSurvey: (survey: ISurvey) => void;
   mode: ExamMode | null;
   source: ExamSource | null;
 }

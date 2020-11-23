@@ -4,7 +4,7 @@ import { AnyAction } from 'redux';
 import { HTTPError } from '@/typings';
 import { getAll, getById, create, update, remove } from '@/services/exams';
 import { Category } from '@/models/categories';
-import { SurveyObjects } from 'survey-creator';
+import { ISurvey } from 'survey-react';
 
 export type ExamType = 'EXAM' | 'QUIZ' | 'SURVEY';
 
@@ -34,7 +34,7 @@ export interface Exam {
   mode: ExamMode;
   source: ExamSource;
   type: ExamType;
-  content: SurveyObjects;
+  content: ISurvey;
 }
 
 export interface ExamState {

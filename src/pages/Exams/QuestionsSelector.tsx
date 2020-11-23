@@ -3,10 +3,12 @@ import { Button, Col, Row, Table } from 'antd';
 import { Category, Question, QUESTIONS_ACTIONS, useDispatch, useSelector } from 'umi';
 import { RootState } from '@/typings';
 import { isEmpty } from 'lodash';
+import { IElement } from 'survey-react';
+import { ReactText } from 'react';
 
 export interface QuestionsSelectorProps {
   categories: Category[];
-  onSelectQuestions: (selectedQuestions: Question[] | null) => void;
+  onSelectQuestions: (selectedQuestions: IElement[] | null) => void;
 }
 
 export interface TableData {
@@ -17,8 +19,10 @@ export interface TableData {
 }
 
 const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ categories, onSelectQuestions }) => {
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedRows, setSelectedRows]: [number[], any] = useState([]);
   const [data, setData]: [TableData[], any] = useState([]);
+  const [elements, setElements]: [IElement[], any] = useState([]);
+  const [selectedQuestionsElements, setSelectedQuestionsElements]: [IElement[], any] = useState([]);
   const { loading, allQuestions } = useSelector((state: RootState) => state.questions);
   const dispatch = useDispatch();
 
@@ -34,8 +38,20 @@ const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ categories, onSel
     if (!isEmpty(allQuestions) && isEmpty(data)) filterQuestions();
   }, [allQuestions]);
 
+  const onSelectedRows = (selectedRowKeys: ReactText[]) => {
+    setSelectedRows(selectedRowKeys);
+    const questionsNames: string[] = data
+      .filter((el) => selectedRowKeys.includes(el.key))
+      .map((el) => el.name);
+
+    const selectedElements = elements.filter((element) => questionsNames.includes(element.name));
+
+    setSelectedQuestionsElements(selectedElements);
+  };
+
   const filterQuestions = () => {
-    let tableData: TableData[] = [];
+    const tableData: TableData[] = [];
+    const elementsHolder: IElement[] = [];
 
     categories.forEach((category) => {
       allQuestions.forEach((question) => {
@@ -48,11 +64,15 @@ const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ categories, onSel
                 category: category.name,
                 type: element.type,
               });
+
+              elementsHolder.push(element);
             });
           });
         }
       });
     });
+
+    setElements(elementsHolder);
 
     setData(
       tableData.map((d, i) => {
@@ -78,7 +98,7 @@ const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ categories, onSel
 
   const rowSelection = {
     selectedRows,
-    onChange: (selectedRowKeys: any) => setSelectedRows(selectedRowKeys),
+    onChange: (selectedRowKeys: ReactText[]) => onSelectedRows(selectedRowKeys),
   };
 
   const hasSelected = selectedRows.length > 0;
@@ -92,7 +112,7 @@ const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ categories, onSel
           </span>
           <Button
             type="primary"
-            onClick={() => onSelectQuestions(null)}
+            onClick={() => onSelectQuestions(selectedQuestionsElements)}
             disabled={!hasSelected}
             block
           >

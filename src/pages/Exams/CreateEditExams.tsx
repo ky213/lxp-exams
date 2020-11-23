@@ -25,6 +25,7 @@ import {
   SourceSelector,
   QuestionsSelector,
 } from './index';
+import { IElement, ISurvey } from 'survey-react';
 
 export interface CreateEditExamProps {}
 
@@ -33,6 +34,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
   const [source, setSource]: [ExamSource | null, any] = useState(null);
   const [type, setType]: [ExamType | null, any] = useState(null);
   const [categories, setSelectedCategories]: [Category[], any] = useState([]);
+  const [selectedQuestions, setSelectedQuestions]: [IElement[], any] = useState([]);
   const [settings, setSettings]: [Settings | null, any] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const dispatch = useDispatch();
@@ -62,8 +64,17 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
     if (settings) handleSaveSurvey(null);
   }, [saveSuccess, settings]);
 
-  const handleSaveSurvey = (survey: SurveyObjects | null) => {
-    const surveyData = { type, source, mode: mode || 'NONE', categories, settings, content: survey };
+  const handleSaveSurvey = (
+    survey: ISurvey | null = { pages: [{ elements: selectedQuestions }] },
+  ) => {
+    const surveyData = {
+      type,
+      source,
+      mode: mode || 'NONE',
+      categories,
+      settings,
+      content: survey,
+    };
 
     if (currentExam?._id)
       dispatch({
@@ -101,7 +112,8 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
     setCurrentStep(step);
   };
 
-  const handleOnSelectQuestions = (selectedQuestions: Question[] | null) => {
+  const handleOnSelectQuestions = (questions: IElement[] | null) => {
+    setSelectedQuestions(questions);
     setCurrentStep(5);
   };
 
@@ -141,7 +153,9 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
             onSelectCategories={handleOnSelectCategories}
           />
         )}
-        {currentStep === 4 && <QuestionsSelector categories={categories} onSelectQuestions={handleOnSelectQuestions} />}
+        {currentStep === 4 && (
+          <QuestionsSelector categories={categories} onSelectQuestions={handleOnSelectQuestions} />
+        )}
         {currentStep === 5 && <ExamSettings onSaveExamSettings={handleOnSaveExamSettings} />}
         {currentStep === 6 && (
           <SurveyCreator saveSurvey={handleSaveSurvey} mode={mode} source={source} />
