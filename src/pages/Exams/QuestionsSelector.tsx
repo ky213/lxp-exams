@@ -9,9 +9,16 @@ export interface QuestionsSelectorProps {
   onSelectQuestions: (selectedQuestions: Question[] | null) => void;
 }
 
+export interface TableData {
+  key: number;
+  category: string;
+  name: string;
+  type: string;
+}
+
 const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ categories, onSelectQuestions }) => {
   const [selectedRows, setSelectedRows] = useState([]);
-  const [data, setData] = useState([]);
+  const [data, setData]: [TableData[], any] = useState([]);
   const { loading, allQuestions } = useSelector((state: RootState) => state.questions);
   const dispatch = useDispatch();
 
@@ -28,7 +35,7 @@ const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ categories, onSel
   }, [allQuestions]);
 
   const filterQuestions = () => {
-    let tableData = [];
+    let tableData: TableData[] = [];
 
     categories.forEach((category) => {
       allQuestions.forEach((question) => {
@@ -36,8 +43,9 @@ const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ categories, onSel
           question.content.pages.forEach((page) => {
             page.elements.forEach((element) => {
               tableData.push({
-                category: category.name,
+                key: 0,
                 name: element.name,
+                category: category.name,
                 type: element.type,
               });
             });
@@ -72,7 +80,9 @@ const QuestionsSelector: React.FC<QuestionsSelectorProps> = ({ categories, onSel
     selectedRows,
     onChange: (selectedRowKeys: any) => setSelectedRows(selectedRowKeys),
   };
+
   const hasSelected = selectedRows.length > 0;
+
   return (
     <div>
       <Row style={{ marginBottom: 16 }} justify="end">
