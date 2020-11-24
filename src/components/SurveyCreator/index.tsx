@@ -16,8 +16,8 @@ import { ISurvey } from 'survey-react';
 
 export interface SurveyCreatorProps {
   saveSurvey: (survey: ISurvey) => void;
-  mode: ExamMode | null;
-  source: ExamSource | null;
+  mode?: ExamMode | null;
+  source?: ExamSource | null;
 }
 
 let surveyCreator: SurveyCreator | undefined | null = null;

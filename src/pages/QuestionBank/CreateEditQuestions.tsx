@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
+import { message } from 'antd';
+import { IPage, ISurvey, ISurveyElement } from 'survey-react';
+import {
+  ISurveyPage,
+  Question,
+  QUESTIONS_ACTIONS,
+  useDispatch,
+  useHistory,
+  useSelector,
+} from 'umi';
+import { v4 as uuid } from 'uuid';
 
 import SurveyCreator from '@/components/SurveyCreator';
 import SelectCategory from './SelectCategory';
-import { Question, QUESTIONS_ACTIONS, useDispatch, useHistory, useSelector } from 'umi';
-import { SurveyObjects } from 'survey-creator';
 import { RootState } from '@/typings';
-import { message } from 'antd';
 
 export interface CreateEditCategoryProps {}
 
@@ -33,18 +41,28 @@ const CreateEditCategory: React.FC<CreateEditCategoryProps> = () => {
     }
   }, [saveSuccess]);
 
-  const handleSaveSurvey = (survey: SurveyObjects) => {
-    const surveyData = { ...questionData, content: survey };
-    if (currentQuestion && currentQuestion._id)
+  const handleSaveSurvey = (survey: ISurvey) => {
+    survey = insertIdsToSurveyElements(survey);
+
+    if (currentQuestion?._id)
       dispatch({
         type: QUESTIONS_ACTIONS.UPDATE,
-        payload: surveyData,
+        payload: { ...questionData, content: survey },
       });
     else
       dispatch({
         type: QUESTIONS_ACTIONS.CREATE,
-        payload: surveyData,
+        payload: { ...questionData, content: survey },
       });
+  };
+
+  const insertIdsToSurveyElements = (survey: ISurvey): ISurvey => {
+    const newSurveyPages: any[] = survey.pages.map(({ elements }) =>
+      elements.map((element) => ({ ...element, id: uuid() })),
+    );
+
+    console.log(newSurveyPages);
+    return { ...survey, pages: newSurveyPages };
   };
 
   return (

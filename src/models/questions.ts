@@ -11,13 +11,22 @@ import {
   remove,
 } from '@/services/questionbank/questions';
 import { Category } from '@/models/categories';
-import { ISurvey } from 'survey-react';
+import { IElement, IPage, ISurvey } from 'survey-react';
 export interface Question {
   _id: string;
   title: string;
   description: string;
   category: Category;
   content: ISurvey;
+}
+
+export interface ISurveyElement extends IElement {
+  id: string;
+  type: string;
+}
+
+export interface ISurveyPage extends Omit<IPage, 'elements'> {
+  elements: ISurveyElement[];
 }
 
 export interface QuestionState {
