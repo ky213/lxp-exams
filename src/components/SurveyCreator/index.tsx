@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button, Card, Col, Result, Row } from 'antd';
+import { ISurvey } from 'survey-react';
 import { SurveyCreator, StylesManager } from 'survey-creator';
 import { CloseOutlined, UploadOutlined } from '@ant-design/icons';
 import { RootState } from '@/typings';
@@ -12,7 +13,6 @@ import {
   useHistory,
   useSelector,
 } from 'umi';
-import { ISurvey } from 'survey-react';
 
 export interface SurveyCreatorProps {
   saveSurvey: (survey: ISurvey) => void;
@@ -40,11 +40,12 @@ const SurveyCreatorComponent: React.FC<SurveyCreatorProps> = ({ saveSurvey, mode
 
   const initSurveyCreator = () => {
     StylesManager.applyTheme('');
-    var options = {
+
+    const options = {
       showToolbox: 'right',
       showLogicTab: true,
       showPropertyGrid: 'right',
-      showEmbededSurveyTab: true,
+      showEmbededSurveyTab: false,
     };
 
     surveyCreator = new SurveyCreator('creatorElement', options);

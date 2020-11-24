@@ -72,14 +72,6 @@ export const SelectCategory = (props: SelectCategoryProps) => {
     </div>
   );
 
-  const defaultCategory = () => {
-    const result = categories.allCategories.find(
-      ({ _id }) => _id == questions.currentQuestion?.category,
-    );
-
-    return result?.name || '';
-  };
-
   return (
     <Card loading={questions.loading}>
       <Row>
@@ -100,7 +92,7 @@ export const SelectCategory = (props: SelectCategoryProps) => {
               label="Category"
               name="category"
               rules={[{ required: true }]}
-              initialValue={defaultCategory()}
+              initialValue={questions.currentQuestion?.category.name}
             >
               <Select dropdownRender={dropdownRender} placeholder="select category...">
                 {categories.allCategories.map(({ name }) => (
