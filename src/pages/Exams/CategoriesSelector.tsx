@@ -2,17 +2,15 @@ import React, { useEffect } from 'react';
 import { Form, Input, Button, Space, Row, Col, Select, message } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { RootState } from '@/typings';
-import { CATEGORIES_ACTIONS, Category, useDispatch, useSelector } from 'umi';
+import { CATEGORIES_ACTIONS, Category, ExamMode, useDispatch, useSelector } from 'umi';
 
 export interface CategoriesSelectorProps {
+  mode: ExamMode | null;
   selectedCategories: Category[];
   onSelectCategories: (categories: Category[]) => void;
 }
 
-const CategoriesSelector: React.FC<CategoriesSelectorProps> = ({
-  selectedCategories,
-  onSelectCategories,
-}) => {
+const CategoriesSelector: React.FC<CategoriesSelectorProps> = ({ mode, onSelectCategories }) => {
   const { allCategories } = useSelector((state: RootState) => state.categories);
   const dispatch = useDispatch();
 
@@ -66,15 +64,16 @@ const CategoriesSelector: React.FC<CategoriesSelectorProps> = ({
                           ))}
                         </Select>
                       </Form.Item>
-                      <Form.Item
-                        {...field}
-                        name={[field.name, 'weight']}
-                        fieldKey={[field.fieldKey, 'weight']}
-                        rules={[{ required: true }]}
-                      >
-                        <Input type="number" placeholder="weight" />
-                      </Form.Item>
-
+                      {mode === 'RANDOM' && (
+                        <Form.Item
+                          {...field}
+                          name={[field.name, 'weight']}
+                          fieldKey={[field.fieldKey, 'weight']}
+                          rules={[{ required: true }]}
+                        >
+                          <Input type="number" placeholder="weight" />
+                        </Form.Item>
+                      )}
                       <MinusCircleOutlined
                         onClick={() => {
                           remove(field.name);
@@ -82,7 +81,6 @@ const CategoriesSelector: React.FC<CategoriesSelectorProps> = ({
                       />
                     </Space>
                   ))}
-
                   <Form.Item>
                     <Button type="dashed" onClick={add} block>
                       <PlusOutlined /> Add category

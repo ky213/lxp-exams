@@ -61,19 +61,17 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
       message.error(`Error: ${error.message}`);
     }
 
-    if (settings) handleSaveSurvey(null);
+    if (settings && !saveSuccess) handleSaveSurvey(null);
   }, [saveSuccess, settings]);
 
-  const handleSaveSurvey = (
-    survey: ISurvey | null = { pages: [{ elements: selectedQuestions }] },
-  ) => {
+  const handleSaveSurvey = (survey: ISurvey | null) => {
     const surveyData = {
       type,
       source,
       mode: mode || 'NONE',
       categories,
       settings,
-      content: survey,
+      content: survey || { pages: [{ elements: selectedQuestions }] },
     };
 
     if (currentExam?._id)
@@ -149,6 +147,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
         {currentStep === 2 && <ModeSelector onSelectMode={handleOnSelectMode} />}
         {currentStep === 3 && (
           <CategoriesSelector
+            mode={mode}
             selectedCategories={categories}
             onSelectCategories={handleOnSelectCategories}
           />
