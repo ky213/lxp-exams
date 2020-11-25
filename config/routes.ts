@@ -20,6 +20,7 @@ export const routes: IRoute[] = [
       {
         path: 'list',
         name: 'List',
+        icon: 'QuestionCircleFilled',
         component: './QuestionBank/Questions',
       },
       {
@@ -59,14 +60,19 @@ export const routes: IRoute[] = [
     icon: 'BulbFilled',
     routes: [
       {
-        path: 'exams/list',
+        path: 'list',
         name: 'List',
         component: './Exams/Exams',
       },
       {
-        path: 'exams/edit',
+        path: 'edit',
         name: 'Create',
         component: './Exams/CreateEditExams',
+      },
+      {
+        path: 'take-exam/:examId',
+        component: './Exams/ExamDelivery',
+        layout: false,
       },
     ],
   },

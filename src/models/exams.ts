@@ -152,7 +152,7 @@ const ExamsModel: ExamsModel = {
       return {
         ...state,
         loading: false,
-        currentQuestion: payload,
+        currentExam: payload,
       };
     },
     saveUpdate: (state = initialState, { payload }) => {

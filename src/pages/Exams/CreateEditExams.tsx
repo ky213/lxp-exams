@@ -54,7 +54,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
   useEffect(() => {
     if (!loading && saveSuccess) {
       message.success('Exams saved successfully');
-      history.push('/exams/exams/list');
+      history.push('/exams/list');
     }
 
     if (!loading && error) {

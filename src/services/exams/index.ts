@@ -6,7 +6,7 @@ export async function getAll(): Promise<any> {
 }
 
 export async function getById(id: string): Promise<any> {
-  return axios.get<Exam>(`/api/exams/${id}`);
+  return axios.get<Exam>(`/api/questionbanks/exams/${id}`);
 }
 
 export async function create(data: Omit<Exam, 'id'>): Promise<any> {

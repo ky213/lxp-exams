@@ -45,9 +45,9 @@ export const Exams = () => {
       key: 'action',
       render: (_text: string, record: Exam) => (
         <Space size="middle">
-          {/* <Link to={`edit/${record._id}`}>
-            <EditFilled /> Edit
-          </Link> */}
+          <Link to={`take-exam/${record._id}`}>
+            <EditFilled /> Take Exam
+          </Link>
           <Popconfirm
             title="Are you sure to delete this exam?"
             onConfirm={() => handleDelete(record)}
