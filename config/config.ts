@@ -14,7 +14,7 @@ export default defineConfig({
   },
   layout: {
     name: 'lxp-exams',
-    locale: true,
+    locale: false,
     siderWidth: 208,
   },
   locale: {
@@ -38,8 +38,7 @@ export default defineConfig({
     '@layout-header-background': '#293862',
     '@menu-dark-submenu-bg': '#293862',
   },
-  // @ts-ignore
-  title: false,
+  title: 'LXP-Exam',
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || 'dev'],
   manifest: {

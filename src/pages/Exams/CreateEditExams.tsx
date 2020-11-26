@@ -60,9 +60,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
     if (!loading && error) {
       message.error(`Error: ${error.message}`);
     }
-
-    if (settings && !saveSuccess) handleSaveSurvey(null);
-  }, [saveSuccess, settings]);
+  }, [saveSuccess]);
 
   const handleSaveSurvey = (survey: ISurvey | null) => {
     const surveyData = {
@@ -87,7 +85,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
   };
 
   const handleOnSelectSource = (examSource: ExamSource) => {
-    const step = examSource === 'QUESTION_BANK' ? 2 : 6;
+    const step = examSource === 'QUESTION_BANK' ? 2 : 5;
 
     setSource(examSource);
     setCurrentStep(step);
@@ -117,11 +115,12 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
 
   const handleOnSaveExamSettings = (values: Settings) => {
     setSettings(values);
+    setCurrentStep(6);
   };
 
   let activeSteps: string = '0';
 
-  if (source === 'NO_QUESTION_BANK') activeSteps = '016';
+  if (source === 'NO_QUESTION_BANK') activeSteps = '0156';
   else if (mode === 'RANDOM') activeSteps = '01235';
   else if (mode === 'MANUAL') activeSteps = '012345';
 

@@ -9,7 +9,7 @@ export default {
   fixSiderbar: true,
   colorWeak: false,
   menu: {
-    locale: true,
+    locale: false,
   },
   title: 'LXP-Exams',
   pwa: false,
