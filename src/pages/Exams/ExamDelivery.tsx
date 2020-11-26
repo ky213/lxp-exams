@@ -20,7 +20,17 @@ const ExamDelivery = () => {
     };
   }, []);
 
-  return <div>{currentExam && <Survey json={currentExam?.content} />}</div>;
+  const handleOnComplete = (result: any) => {
+    console.log(result.data);
+  };
+
+  const json = {
+    pages: currentExam?.content.pages,
+    completedHtml:
+      '<h3>Thank you for taking the exam.</h3> <h5>The exam result is saved automatically to the database</h5>',
+  };
+
+  return <div>{currentExam && <Survey json={json} onComplete={handleOnComplete} />}</div>;
 };
 
 export default ExamDelivery;
