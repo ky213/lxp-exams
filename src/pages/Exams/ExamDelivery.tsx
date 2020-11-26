@@ -1,7 +1,7 @@
 import { RootState } from '@/typings';
 import React, { useEffect } from 'react';
 import { Survey } from 'survey-react';
-import { EXAMS_ACTIONS, useDispatch, useParams, useSelector } from 'umi';
+import { ExamResult, EXAMS_ACTIONS, useDispatch, useParams, useSelector } from 'umi';
 
 const ExamDelivery = () => {
   const { currentExam } = useSelector((state: RootState) => state.exams);
@@ -21,7 +21,17 @@ const ExamDelivery = () => {
   }, []);
 
   const handleOnComplete = (result: any) => {
-    console.log(result.data);
+    const payload: ExamResult = {
+      examId,
+      userId: '',
+      score: result.score,
+      timeSpent: result.timeSpent,
+      answers: result.data,
+    };
+    dispatch({
+      type: EXAMS_ACTIONS.SAVE_RESULT,
+      payload,
+    });
   };
 
   const json = {

@@ -20,3 +20,7 @@ export async function update(data: Partial<Exam>): Promise<any> {
 export async function remove(id: string): Promise<any> {
   return axios.delete<any>(`/api/questionbanks/exams/${id}`);
 }
+
+export async function saveResult(result: any): Promise<any> {
+  return axios.post<any>(`/api/questionbanks/result`, result);
+}

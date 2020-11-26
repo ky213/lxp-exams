@@ -2,7 +2,7 @@ import { Effect, Reducer } from 'umi';
 import { AnyAction } from 'redux';
 
 import { HTTPError } from '@/typings';
-import { getAll, getById, create, update, remove } from '@/services/exams';
+import { getAll, getById, create, update, remove, saveResult } from '@/services/exams';
 import { Category } from '@/models/categories';
 import { ISurvey } from 'survey-react';
 
@@ -12,21 +12,25 @@ export type ExamSource = 'QUESTION_BANK' | 'NO_QUESTION_BANK';
 
 export type ExamMode = 'RANDOM' | 'MANUAL';
 
-export type ExamGradingMode = 'AVERAGE_ATTEMPT' | 'LAST_ATTEMPT' | 'HIGHEST_ATTEMPT';
+export type ExamGradingMethod = 'AVERAGE_ATTEMPT' | 'LAST_ATTEMPT' | 'HIGHEST_ATTEMPT';
+
+export type ExamGradingMode = 'AUTOMATIC' | 'MANUAL';
 
 export type Settings = {
   name: string;
   description: string;
   maxTimeToFinish: number;
   maxAttemps: number;
-  gradingMethod: ExamGradingMode;
+  gradingMethod: ExamGradingMethod;
+  gradingMode: ExamGradingMode;
+  validFromDate: string;
+  validToDate: string;
   numberOfQuestions: number;
   questionsPerPage: number;
   minPassScore: number;
   showFeedBack: boolean;
   outOfMark: number;
 };
-
 export interface Exam {
   _id?: string;
   settings: Settings;
@@ -35,6 +39,15 @@ export interface Exam {
   source: ExamSource;
   type: ExamType;
   content: ISurvey;
+}
+
+export interface ExamResult {
+  userId: string;
+  examId: string;
+  score?: number;
+  timeSpent: number;
+  numberOfAttempts?: number;
+  answers: { [key: string]: string };
 }
 
 export interface ExamState {
@@ -54,6 +67,7 @@ export interface ExamsModel {
     create: Effect;
     update: Effect;
     delete: Effect;
+    saveResult: Effect;
     reset: Effect;
   };
   reducers: {
@@ -80,6 +94,7 @@ export enum EXAMS_ACTIONS {
   CREATE = 'exams/create',
   UPDATE = 'exams/update',
   DELETE = 'exams/delete',
+  SAVE_RESULT = 'exams/saveResult',
   RESET = 'exams/reset',
 }
 
@@ -128,6 +143,14 @@ const ExamsModel: ExamsModel = {
         yield put({ type: 'loading' });
         yield call(remove, action.payload);
         yield put({ type: 'getAll' });
+      } catch (error) {
+        yield put({ type: 'error', payload: error });
+      }
+    },
+    *saveResult(action, { call, put }) {
+      try {
+        yield put({ type: 'loading' });
+        yield call(saveResult, action.payload);
       } catch (error) {
         yield put({ type: 'error', payload: error });
       }
