@@ -62,6 +62,10 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
     }
   }, [saveSuccess]);
 
+  useEffect(() => {
+    if (settings && source === 'QUESTION_BANK') handleSaveSurvey(null);
+  }, [settings]);
+
   const handleSaveSurvey = (survey: ISurvey | null) => {
     const surveyData = {
       type,
@@ -115,7 +119,7 @@ const CreateEditExam: React.FC<CreateEditExamProps> = () => {
 
   const handleOnSaveExamSettings = (values: Settings) => {
     setSettings(values);
-    setCurrentStep(6);
+    if (source === 'NO_QUESTION_BANK') setCurrentStep(6);
   };
 
   let activeSteps: string = '0';
