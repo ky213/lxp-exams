@@ -1,10 +1,16 @@
 steps:
 
-  - id: 'npm install'
+  - id: 'install dependencies'
+    name: 'node:12.9.0'
+    args: [ "npm install --save @/services/questionbank/categories @/services/questionbank/questions" ]
+    waitFor:
+      - '-'
+
+  - id: 'install dependencies 2'
     name: 'node:12.9.0'
     args: [ "yarn" ]
     waitFor:
-      - '-'
+      - 'install dependencies'
 
   - id: 'prepare env file'
     name: 'alpine'
@@ -22,7 +28,7 @@ steps:
     args: [ "yarn", "build" ]
     waitFor:
       - 'prepare env file'
-      - 'npm install'
+      - 'install dependencies 2'
 
   - id: 'clear DEMO storage before new release'
     name: 'gcr.io/cloud-builders/gsutil'
