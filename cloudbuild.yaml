@@ -2,7 +2,7 @@ steps:
 
   - id: 'npm install'
     name: 'node:12.9.0'
-    args: [ "npm","install","--legacy-peer-deps" ]
+    args: [ "yarn" ]
     waitFor:
       - '-'
 
@@ -19,7 +19,7 @@ steps:
 
   - id: 'build release'
     name: 'node:12.9.0'
-    args: [ "npm", "run", "build" ]
+    args: [ "yarn", "build" ]
     waitFor:
       - 'prepare env file'
       - 'npm install'
