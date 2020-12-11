@@ -19,7 +19,7 @@ steps:
 
   - id: 'build release'
     name: 'node'
-    args: [ "npm", "run", "build:prod" ]
+    args: [ "npm", "run", "build" ]
     waitFor:
       - 'prepare env file'
       - 'npm install'
