@@ -1,7 +1,7 @@
 steps:
 
   - id: 'npm install'
-    name: 'node'
+    name: 'node:12.9.0'
     args: [ "npm","install","--legacy-peer-deps" ]
     waitFor:
       - '-'
@@ -18,7 +18,7 @@ steps:
       - '-'
 
   - id: 'build release'
-    name: 'node'
+    name: 'node:12.9.0'
     args: [ "npm", "run", "build" ]
     waitFor:
       - 'prepare env file'
