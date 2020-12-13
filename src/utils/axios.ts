@@ -5,6 +5,7 @@ const PORT = 4008;
 
 const url = {
   dev: `http://localhost:${PORT}`,
+  staging: `https://api.staging.lxpia.com`,
 };
 
 const instance = axios.create({
