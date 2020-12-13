@@ -19,7 +19,7 @@ steps:
 
   - id: 'build release'
     name: 'node:14.15.0'
-    args: [ "npm","run","build" ]
+    args: [ "yarn","build" ]
     waitFor:
       - 'prepare env file'
       - 'install dependencies'
