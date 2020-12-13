@@ -2,7 +2,7 @@ steps:
 
   - id: 'install dependencies'
     name: 'node:14.15.0'
-    args: [ "npm","--experimental-modules","install" ]
+    args: [ "yarn","install","--pnp" ]
     waitFor:
       - '-'
 
