@@ -1,26 +1,10 @@
 steps:
 
-  - id: 'install deps'
-    name: 'node:14.15.0'
-    entrypoint: 'bash'
-    args:
-    - '-c'
-    - |
-      yarn || exit 0
-    waitFor:
-      - '-'
-
-  - id: 'install deps2'
-    name: 'node:14.15.0'
-    args: [ "npm", "install","--save","@/services/questionbank/categories","@/services/questionbank/questions" ]
-    waitFor:
-      - 'install deps'
-
   - id: 'install dependencies'
     name: 'node:14.15.0'
     args: [ "yarn" ]
     waitFor:
-      - 'install deps2'
+      - '-'
 
   - id: 'prepare env file'
     name: 'alpine'
