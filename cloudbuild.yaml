@@ -19,7 +19,7 @@ steps:
 
   - id: 'build release'
     name: 'node:14.15.0'
-    args: [ "npm","--experimental-modules","run","build" ]
+    args: [ "npm","run","build" ]
     waitFor:
       - 'prepare env file'
       - 'install dependencies'
