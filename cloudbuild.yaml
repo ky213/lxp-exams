@@ -1,8 +1,8 @@
 steps:
 
   - id: 'install dependencies'
-    name: 'node:14.15.0'
-    args: [ "yarn","install" ]
+    name: 'node:10.23.0'
+    args: [ "yarn" ]
     waitFor:
       - '-'
 
@@ -18,7 +18,7 @@ steps:
       - '-'
 
   - id: 'build release'
-    name: 'node:14.15.0'
+    name: 'node:10.23.0'
     args: [ "yarn","build" ]
     waitFor:
       - 'prepare env file'
