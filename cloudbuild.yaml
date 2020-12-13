@@ -2,15 +2,9 @@ steps:
 
   - id: 'install dependencies'
     name: 'node:14.15.0'
-    args: [ "npm","--experimental-modules","install" ]
+    args: [ "yarn","install" ]
     waitFor:
       - '-'
-
-  - id: 'install typescript'
-    name: 'node:14.15.0'
-    args: [ "npm","install","typescript" ]
-    waitFor:
-      - 'install dependencies'
 
   - id: 'prepare env file'
     name: 'alpine'
@@ -28,7 +22,7 @@ steps:
     args: [ "yarn","build" ]
     waitFor:
       - 'prepare env file'
-      - 'install typescript'
+      - 'install dependencies'
 
   - id: 'clear DEMO storage before new release'
     name: 'gcr.io/cloud-builders/gsutil'
