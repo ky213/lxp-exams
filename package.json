@@ -2,6 +2,7 @@
   "name": "ant-design-pro",
   "version": "5.0.0-alpha.0",
   "private": true,
+  "type": "module",
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",

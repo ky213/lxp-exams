@@ -1,8 +1,8 @@
 steps:
 
-  - id: 'npm install'
-    name: 'node:12.9.0'
-    args: [ "yarn" ]
+  - id: 'install dependencies'
+    name: 'node:14.15.0'
+    args: [ "npm","--experimental-modules","install" ]
     waitFor:
       - '-'
 
@@ -18,11 +18,11 @@ steps:
       - '-'
 
   - id: 'build release'
-    name: 'node:12.9.0'
-    args: [ "yarn", "build" ]
+    name: 'node:14.15.0'
+    args: [ "npm","--experimental-modules","run","build" ]
     waitFor:
       - 'prepare env file'
-      - 'npm install'
+      - 'install dependencies'
 
   - id: 'clear DEMO storage before new release'
     name: 'gcr.io/cloud-builders/gsutil'
