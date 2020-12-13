@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const { REACT_APP_ENV } = process.env;
 const PORT = 4008;
 
 const url = {
   dev: `http://localhost:${PORT}`,
   staging: `https://api.staging.lxpia.com`,
+  prod: `https://api.lxpia.com`,
 };
 
 const instance = axios.create({

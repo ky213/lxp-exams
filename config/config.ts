@@ -44,4 +44,7 @@ export default defineConfig({
   manifest: {
     basePath: '/',
   },
+  define: {
+    REACT_APP_ENV,
+  },
 });
