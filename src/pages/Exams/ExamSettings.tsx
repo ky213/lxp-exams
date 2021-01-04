@@ -70,8 +70,8 @@ const ExamSettings: React.FC<ExamSettingsProps> = ({ onSaveExamSettings }) => {
             <Input type="number" />
           </Form.Item>
           <Form.Item name="showFeedBack" label="Show feedback" rules={[{ required: true }]}>
-            <Radio.Group defaultValue={false}>
-              <Radio.Button value={true}>Yes</Radio.Button>
+            <Radio.Group >
+              <Radio.Button value={true} >Yes</Radio.Button>
               <Radio.Button value={false}>No</Radio.Button>
             </Radio.Group>
           </Form.Item>
